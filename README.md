@@ -119,14 +119,13 @@ Open Tidal and have fun.
 
 ## Learn more
 
-I strongly recomend these public sources to learn both SuperCollider and Tidal. The communities are truly welcomming and there's no prerequisite or knowledge entry barrier.
+I strongly recomend these public sources to learn both SuperCollider and Tidal. The communities are truly welcomming and there's no prerequisite or knowledge entry barrier.  
 Make use of SuperCollider Help System to learn more about any of the UGens or methods you may encounter here and are curious about.
 
 ### SuperCollider
   * [sc-users mailing-list](http://www.birmingham.ac.uk/facilities/ea-studios/research/supercollider/mailinglist.aspx).
   * [sc-forum](https://scsynth.org).
   * [Lurk channel](https://talk.lurk.org/channel/supercollider).
-  * **make use of the SC Help System. `Ctrl+d` will open your mind.**
   
 ### Tidal Cycles
   * [Tidal mailing-list](tidal@we.lurk.org).
