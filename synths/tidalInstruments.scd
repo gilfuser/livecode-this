@@ -6,8 +6,6 @@ SynthDef(\dummy, { |out, sustain = 1, speed = 1, begin = 0, end = 1, pan, accele
 	phase = Line.ar(begin, end, sustain);
 	rate = (begin + 1) * (speed + Sweep.kr(1, accelerate));
 	sound = DC.ar(0);
-	// sound = Impulse.ar(0);
-	// sound = HPF.ar(sound, 19000);
 	OffsetOut.ar(out,
 		DirtPan.ar(sound, ~dirt.numChannels, pan)
 	)
@@ -189,49 +187,3 @@ SynthDef(\rhodes, { | out freq pan vel = 0.8 modind = 0.2 mix = 0.2 lfospeed = 0
 	)
 }).add;
 );
-
-///////////////
-
-
-/*
-a = Scale.new(
-    #[0, 1, 3, 5, 7, 8, 10],
-    12,
-    Tuning.new([0, 0.75, 2, 3.5, 4, 5, 6, 7, 8, 9, 10, 11]),
-    "Custom"
-);*/
-
-/*
-Pbind(
-\instrument, \help_dwgpluckedstiff,
-\scale ,a,
-\delta , Pseq([1,0.5,0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,1,1]*0.25,inf),
-\dur , 2,
-\degree, Pseq([1,8,8,8,8,8,8,-6,Prand([9,10,11],1),1,7,8]-8, inf),
-\amp , Pwhite(0.2,0.8),
-\c3 , Pseq([Pseq([1400],24),Pseq([300],24)],inf),
-\pan , Pwhite(-1,1),
-\fB , Pseq([0,80,400],inf),
-).play;
-*/
-
-
-// ATARI
-
-/*(
-Pbind(
-    \instrument, \atari,
-    \freqa,    Pseq((#[55, 55, 57, 58, 57, 55, 58, 50]-12).midicps, inf),
-    \freqb,    Pseq([
-                    Pseq( (#[55, 55, 54, 55, 54, 55, 58, 57]+12).midicps, 2),
-                    Prand((#[55, 55, 54, 55, 54, 55, 58, 57]+12).midicps, 2)
-                ], inf),
-    \dur,    Pseq(#[3, 0.5, 0.5, 1.5, 0.5, 1, 1, 4] * 0.4, inf),
-    \wobbly,    Pstutter(8 * 4, Prand(#[0, 1], inf)),
-    \vola,    15,
-    \volb,    14,
-    \chink,    1,
-    \amp,    0.4
-).play
-);*/
-

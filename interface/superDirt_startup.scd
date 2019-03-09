@@ -12,7 +12,6 @@ q = q ? ();
 	~dirt.loadSoundFiles;
 	// ~dirt.loadSoundFiles("~/tidal-samples/*/*" );
 	0.1.wait;
-	"sync-to-tidal*".loadRelative;
 
 	q.orb0 = ~dirt.orbits[0];
 	q.orb1 = ~dirt.orbits[1];
@@ -47,7 +46,7 @@ q = q ? ();
 
 	~dirt.loadSynthDefs("../synths/tidalInstruments*");
 
-	1.wait; // wait for samples to be read
+	1.wait;
 	"../FX/myTidalFx*".loadRelative;
 
 	Ndef(\allOrbs, {
@@ -57,8 +56,6 @@ q = q ? ();
 
 	"super-dirt prepared".postln;
 }.fork;
-
-
 
 	/*(
 		(

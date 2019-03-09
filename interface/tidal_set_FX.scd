@@ -5,8 +5,10 @@ OSCdef(\oscFromTidal, { |msg|
 );
 
 MFdef(\theHub).add(\post, {|msg| msg.postln});
+/*
 MFdef(\theHub).enable(\post);
 MFdef(\theHub).disable(\post);
+*/
 
 q.orbz = Ndef(\orb0);
 q.vstorb = 0;

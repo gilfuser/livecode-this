@@ -1,4 +1,5 @@
-*s.waitForBoot({
+(
+s.waitForBoot({
 	q = q ? ();
 	"globals/0_loadGlobalUtils.scd".loadRelative;
 	0.1.wait;
@@ -15,3 +16,4 @@
 	s.meter;
 	"interface/tidal_set_FX*".loadRelative;
 });
+);
