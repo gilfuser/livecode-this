@@ -16,7 +16,7 @@ If you don't know anything or almost anything about SuperCollider but you use al
   
  ### where this comes from?
  
-The initial idea of seting this all up was to have continuous control of parameters in Tidal, which works mostly in a *per event* basis. This have been changing and its easier now a days to control things continuously inside Tidal, but some advantages of approach the approach you will find here remains, eg the GUIs and all the flexibility the [JitLib](http://doc.sccode.org/Overviews/JITLib.html) offers.
+The initial idea of seting this all up was to have continuous control of parameters in Tidal, which works mostly in a *per event* basis. This have been changing and its easier now a days to control things continuously inside Tidal, but some advantages of the approach you will find here remains, eg the GUIs to monitor effects states and all the flexibility the [JitLib](http://doc.sccode.org/Overviews/JITLib.html) offers.
 
 ## Use it
 
@@ -66,17 +66,16 @@ Let's supose you want to test this setup as is:
   
   This is also for vim-tidal people.  
   You will find some key mappings specially for livecoding in the file *init.vim*. Include them in your vim config file.  
-  I'm using neovim instead of vim. In order to do that you have to change a line in 'vim-tidal/bin/tidalvim':   
+  I'm using [neovim](https://neovim.io/) instead of vim. In order to do the same you have to change a line in 'vim-tidal/bin/tidalvim':   
   change `VIM=${VIM:-"vim"}` into `VIM=${VIM:-"nvim"}`
   
 ### You are good to go
 
-If you haven't done it so far, clone or download this repo using the green *Clone or Download* button.
+If you haven't done it so far, clone or download this repo using the green *Clone or Download* button in https://github.com/gilfuser/livecode-this.
 
 Open *_0_StartUp.scd* in Supercollider and evaluate the whole block. All the needed files must be loaded in the right order.  
-Open Tidal and have fun.
-
-
+Open Tidal and have fun.  
+Check the effects and synths that you now have and the related parameters. Use different orbits.
 
 ## The files
 
