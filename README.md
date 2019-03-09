@@ -3,7 +3,7 @@ https://github.com/gilfuser/livecode-this
 By Gil Fuser
 
 This is a setup for [livecoding](https://toplap.org/about/).
-Here are the files needed to use [SuperCollider](https://supercollider.github.io/) together with [TidalCycles](https://tidalcycles.org) in a flexible way of controling parameters of effects and synths both from Tidal or SC.
+Here are the files needed to use [SuperCollider](https://supercollider.github.io/) together with [TidalCycles](https://tidalcycles.org) in a flexible way of controling parameters of effects and synths both from Tidal and SuperCollider (SC).
 #### and more:
   * VSTs instruments and effects hosted by SuperCollider.
   * Free GUIs to monitor effects states.
