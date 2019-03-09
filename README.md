@@ -16,7 +16,7 @@ If you don't know anything or almost anything about SuperCollider but you use al
   
  ### where this comes from?
  
-The initial idea of seting this all up was to have continuous control of parameters in Tidal, which works mostly in a *per event* basis. This have been changing and its easier now a days to control things continuously inside Tidal, but some advantages of the approach you will find here remains, eg the GUIs to monitor effects states and all the flexibility the [JitLib](http://doc.sccode.org/Overviews/JITLib.html) offers.
+The initial idea of seting this all up was to have continuous control of parameters in Tidal, which works mostly in a *per event* basis. This have been changing and its easier now a days to control things continuously inside Tidal, but some advantages of the approach you will find here remains, eg the GUIs to monitor effects states and all the flexibility that [JitLib](http://doc.sccode.org/Overviews/JITLib.html) offers.
 
 ## Use it
 
