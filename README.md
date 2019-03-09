@@ -130,3 +130,10 @@ Make use of SuperCollider Help System to learn more about any of the UGens or me
   * [Tidal mailing-list](tidal@we.lurk.org).
   * [Lurk channel](https://talk.lurk.org/channel/tidal).
   * [Tidal Cycles website](https://tidalcycles.org/index.php/Userbase).
+  
+## Contribute
+
+Make Pull Requests if you see something wrong or have suggestions to be included.  
+File issues if you have some problem using this.  
+Fork it if you want to change it your own way.  
+You are always welcome to participate.
