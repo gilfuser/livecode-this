@@ -3,7 +3,7 @@ https://github.com/gilfuser/livecode-this
 By Gil Fuser
 
 This is a setup for [livecoding](https://toplap.org/about/).
-Here are the files needed to use [SuperCollider](https://supercollider.github.io/) together with [TidalCycles](https://tidalcycles.org) in a flexible way of controling parameters of effects and synths both from Tidal or SC.
+Here are the files needed to use [SuperCollider](https://supercollider.github.io/) together with [TidalCycles](https://tidalcycles.org) in a flexible way of controling parameters of effects and synths both from Tidal and SuperCollider (SC).
 #### and more:
   * VSTs instruments and effects hosted by SuperCollider.
   * Free GUIs to monitor effects states.
@@ -16,7 +16,7 @@ If you don't know anything or almost anything about SuperCollider but you use al
   
  ### where this comes from?
  
-The initial idea of seting this all up was to have continuous control of parameters in Tidal, which works mostly in a *per event* basis. This have been changing and its easier now a days to control things continuously inside Tidal, but some advantages of approach the approach you will find here remains, eg the GUIs and all the flexibility the [JitLib](http://doc.sccode.org/Overviews/JITLib.html) offers.
+The initial idea of seting this all up was to have continuous control of parameters in Tidal, which works mostly in a *per event* basis. This have been changing and its easier now a days to control things continuously inside Tidal, but some advantages of the approach you will find here remains, eg the GUIs to monitor effects states and all the flexibility that [JitLib](http://doc.sccode.org/Overviews/JITLib.html) offers.
 
 ## Use it
 
@@ -66,17 +66,16 @@ Let's supose you want to test this setup as is:
   
   This is also for vim-tidal people.  
   You will find some key mappings specially for livecoding in the file *init.vim*. Include them in your vim config file.  
-  I'm using neovim instead of vim. In order to do that you have to change a line in 'vim-tidal/bin/tidalvim':   
+  I'm using [neovim](https://neovim.io/) instead of vim. In order to do the same you have to change a line in 'vim-tidal/bin/tidalvim':   
   change `VIM=${VIM:-"vim"}` into `VIM=${VIM:-"nvim"}`
   
 ### You are good to go
 
-If you haven't done it so far, clone or download this repo using the green *Clone or Download* button.
+If you haven't done it so far, clone or download this repo using the green *Clone or Download* button in https://github.com/gilfuser/livecode-this.
 
 Open *_0_StartUp.scd* in Supercollider and evaluate the whole block. All the needed files must be loaded in the right order.  
-Open Tidal and have fun.
-
-
+Open Tidal and have fun.  
+Check the effects and synths that you now have and the related parameters. Use different orbits.
 
 ## The files
 
@@ -119,16 +118,22 @@ Open Tidal and have fun.
 
 ## Learn more
 
-I strongly recomend these public sources to learn both SuperCollider and Tidal. The communities are truly welcomming and there's no prerequisite or knowledge entry barrier.
+I strongly recomend these public sources to learn both SuperCollider and Tidal. The communities are truly welcomming and there's no prerequisite or knowledge entry barrier.  
 Make use of SuperCollider Help System to learn more about any of the UGens or methods you may encounter here and are curious about.
 
 ### SuperCollider
   * [sc-users mailing-list](http://www.birmingham.ac.uk/facilities/ea-studios/research/supercollider/mailinglist.aspx).
   * [sc-forum](https://scsynth.org).
   * [Lurk channel](https://talk.lurk.org/channel/supercollider).
-  * **make use of the SC Help System. `Ctrl+d` will open your mind.**
   
 ### Tidal Cycles
   * [Tidal mailing-list](tidal@we.lurk.org).
   * [Lurk channel](https://talk.lurk.org/channel/tidal).
   * [Tidal Cycles website](https://tidalcycles.org/index.php/Userbase).
+  
+## Contribute
+
+Make Pull Requests if you see something wrong or have suggestions to be included.  
+File issues if you have some problem using this.  
+Fork it if you want to change it your own way.  
+You are always welcome to participate.
