@@ -26,7 +26,7 @@
 	0.1.wait;
 	~masterFxGroup = Group.after(1); // after default group
 	0.1.wait;
-	~molotcomp = VstPluginController( Synth( \masterFX, [ \in, 0, \out, 0 ], target: ~masterFxGroup , addAction: 'addToTail') );
+	~molotcomp = VSTPluginController( Synth( \masterFX, [ \in, 0, \out, 0 ], target: ~masterFxGroup , addAction: 'addToTail') );
 	0.1.wait;
 	~molotcomp.open( "/home/gilfuser/vst/Molot03-x64.so",  info: true, editor: true );
 	10.wait;
@@ -42,7 +42,7 @@
 	~fxGroupO0 = Group.after(1);
 	0.1.wait;
 
-	~eqOrb0 = VstPluginController( Synth(\vst_insert, [ \in, 2, \out, 2 ], ~fxGroupO0, addAction: \addToTail));
+	~eqOrb0 = VSTPluginController( Synth(\vst_insert, [ \in, 2, \out, 2 ], ~fxGroupO0, addAction: \addToTail));
 	0.1.wait;
 	~eqOrb0.open( "/home/gilfuser/.wine/drive_c/Program Files/Steinberg/VSTPlugins/TDR Nova.so",  info: true, editor: true );
 	10.wait;
@@ -53,7 +53,7 @@
 	~eqOrb0.editor;
 	" \n nova at orb 0 loaded \n".postln;
 
-	~verbOrb0 = VstPluginController( Synth(\vst_insert, [ \in, 2, \out, 2 ], ~fxGroupO0, addAction: \addToTail));
+	~verbOrb0 = VSTPluginController( Synth(\vst_insert, [ \in, 2, \out, 2 ], ~fxGroupO0, addAction: \addToTail));
 	0.1.wait;
 	~verbOrb0.open( "/home/gilfuser/vst/talverb4/TAL-Reverb-4-64.so",  info: true, editor: true );
 	2.wait;
@@ -94,7 +94,7 @@
 	~verbOrb1.close
 	*/
 
-	~verbOrb1 = VstPluginController( Synth(\vst_insert, [ \in, 4, \out, 4 ], ~fxGroupOrb1, addAction: \addToTail));
+	~verbOrb1 = VSTPluginController( Synth(\vst_insert, [ \in, 4, \out, 4 ], ~fxGroupOrb1, addAction: \addToTail));
 	0.1.wait;
 	s.sync;
 	~verbOrb1.open( "/home/gilfuser/vst/talverb4/TAL-Reverb-4-64.so",  info: true, editor: true );
@@ -118,7 +118,7 @@
 	0.1.wait;
 	s.sync;
 
-	~eqOrb2 = VstPluginController( Synth(\vst_insert, [ \in, 6, \out, 6 ], ~fxGroupOrb2, addAction: \addToTail));
+	~eqOrb2 = VSTPluginController( Synth(\vst_insert, [ \in, 6, \out, 6 ], ~fxGroupOrb2, addAction: \addToTail));
 	0.1.wait;
 	~eqOrb2.open( "/home/gilfuser/.wine/drive_c/Program Files/Steinberg/VSTPlugins/TDR Nova.so",  info: true, editor: true );
 	1.wait;
@@ -130,7 +130,7 @@
 	~eqOrb2.close
 	*/
 
-	~verbOrb2 = VstPluginController( Synth(\vst_insert, [ \in, 6, \out, 6 ], ~fxGroupOrb2, addAction: \addToTail));
+	~verbOrb2 = VSTPluginController( Synth(\vst_insert, [ \in, 6, \out, 6 ], ~fxGroupOrb2, addAction: \addToTail));
 	0.1.wait;
 	~verbOrb2.open( "/home/gilfuser/vst/talverb4/TAL-Reverb-4-64.so",  info: true, editor: true );
 	1.wait;
@@ -164,7 +164,7 @@
 	~verbOrb3.close
 	*/
 
-	~verbOrb3 = VstPluginController( Synth(\vst_insert, [ \in, 8, \out, 8 ], ~fxGroupOrb3, addAction: \addToTail));
+	~verbOrb3 = VSTPluginController( Synth(\vst_insert, [ \in, 8, \out, 8 ], ~fxGroupOrb3, addAction: \addToTail));
 	0.1.wait;
 	~verbOrb3.open( "/home/gilfuser/vst/talverb4/TAL-Reverb-4-64.so",  info: true, editor: true );
 	1.wait;
@@ -195,7 +195,7 @@
 
 	// "/home/gilfuser/.wine/drive_c/Program Files/VstPlugins/AudioRealism/ABL3/ABL3(x64).so"
 
-	~acid = VstPluginController( Synth(\vst_istrument, [\out, Ndef(\orb3).bus]) );
+	~acid = VSTPluginController( Synth(\vst_istrument, [\out, Ndef(\orb3).bus]) );
 	0.1.wait;
 	~acid.open( "/home/gilfuser/.wine/dosdevices/c:/users/gilfuser/Downloads/D16 Group 201805 NO INSTALL/C/Program Files/VstPlugins/D16 Group x64/Phoscyon x64.so",  info: true, editor: true );
 	10.wait;
