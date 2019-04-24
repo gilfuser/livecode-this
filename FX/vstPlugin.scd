@@ -15,11 +15,11 @@
 
 	(
 		SynthDef(\masterFX, { | in out bypass = 0 |
-			ReplaceOut.ar(out, VstPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
+			ReplaceOut.ar(out, VSTPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
 		}).add;
 
 		SynthDef.new(\vst_insert, { | in out bypass=0 |
-			ReplaceOut.ar(out, VstPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
+			ReplaceOut.ar(out, VSTPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
 		}).add;
 	);
 
