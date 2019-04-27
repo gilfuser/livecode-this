@@ -62,6 +62,8 @@
 	s.sync;
 	~verbOrb0.editor;
 	0.1.wait;
+	/*
+	*/
 
 	s.sync;
 
@@ -100,8 +102,9 @@
 	~verbOrb1.open( "/home/gilfuser/vst/talverb4/TAL-Reverb-4-64.so",  info: true, editor: true );
 	2.wait;
 	~verbOrb1.readProgram("/home/gilfuser/vst/orb1verb.fxp");
-	s.sync;
+	/*s.sync;
 	~verbOrb1.editor;
+	*/
 	s.sync;
 	~verbOrb1.map(1, ~vwet.subBus(1));
 	~verbOrb1.map(2, ~vdry.subBus(1));
@@ -124,7 +127,7 @@
 	1.wait;
 	~eqOrb2.readProgram("/home/gilfuser/vst/orb2eqPedras.fxp");
 	s.sync;
-	~eqOrb2.editor;
+	// ~eqOrb2.editor;
 	"nova at orb 3 loaded".postln;
 	/*
 	~eqOrb2.close
@@ -136,8 +139,8 @@
 	1.wait;
 	~verbOrb2.readProgram("/home/gilfuser/vst/orb2verb.fxp");
 	s.sync;
-	~verbOrb2.editor;
-	s.sync;
+	/*~verbOrb2.editor;
+	s.sync;*/
 	~verbOrb2.map(1, ~vwet.subBus(2));
 	~verbOrb2.map( 2, ~vdry.subBus(2));
 	~verbOrb2.map(3, ~vdelay.subBus(2));
@@ -170,8 +173,8 @@
 	1.wait;
 	~verbOrb3.readProgram("/home/gilfuser/vst/orb3verb.fxp");
 	s.sync;
-	~verbOrb3.editor;
-	s.sync;
+	/*~verbOrb3.editor;
+	s.sync;*/
 	~verbOrb3.map( 1, ~vwet.subBus(3) );
 	~verbOrb3.map( 2, ~vdry.subBus(3) );
 	~verbOrb3.map( 3, ~vdelay.subBus(3) );
@@ -199,9 +202,10 @@
 	0.1.wait;
 	~acid.open( "/home/gilfuser/.wine/dosdevices/c:/users/gilfuser/Downloads/D16 Group 201805 NO INSTALL/C/Program Files/VstPlugins/D16 Group x64/Phoscyon x64.so",  info: true, editor: true );
 	10.wait;
+	// ~acid.writeProgram("/home/gilfuser/vst/phosycon.fxp");
 	~acid.readProgram("/home/gilfuser/vst/phosycon.fxp");
-	~acid.editor;
 	/*
+	~acid.editor;
 	~acid.gui;
 	~acid.loaded;
 	~acid.numParameters;
