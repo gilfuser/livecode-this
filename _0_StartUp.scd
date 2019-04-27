@@ -7,6 +7,8 @@ s.waitForBoot({
 	0.1.wait;
 	"interface/superDirt_startup*".loadRelative;
 	3.wait;
+	"Synths/tidalInstruments.scd".loadRelative;
+	0.1.wait;
 	"FX/vstPlugin*".loadRelative;
 	30.wait;
 	"FX/fxLib.scd".loadRelative;
