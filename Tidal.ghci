@@ -5,7 +5,7 @@
 import Sound.Tidal.Context
 
 -- total latency = oLatency + cFrameTimespan
-tidal <- startTidal (superdirtTarget {oLatency = 0.1, oAddress = "127.0.0.1", oPort = 57120}) (defaultConfig {cFrameTimespan = 1/20})
+tidal <- startTidal (superdirtTarget {oLatency = 0.2, oAddress = "127.0.0.1", oPort = 57120}) (defaultConfig {cFrameTimespan = 1/20})
 
 :{
 let p = streamReplace tidal
@@ -15,8 +15,8 @@ let p = streamReplace tidal
     unmute = streamUnmute tidal
     solo = streamSolo tidal
     unsolo = streamUnsolo tidal
-    once = streamOnce tidal False
-    asap = streamOnce tidal True
+    once = streamOnce tidal
+    asap = once
     nudgeAll = streamNudgeAll tidal
     all = streamAll tidal
     resetCycles = streamResetCycles tidal
@@ -64,29 +64,7 @@ let p = streamReplace tidal
     tuning = pS "tuningName"
     stepsPerOctave = pI "stepsPerOctave"
     octaveRatio = pF "octaveRatio"
-    pideg = pF "pideg"
-    pdisp = pF "pdisp"
-    tdisp = pF "tdisp"
-    wrate = pF "wrate"
-    depth = pF "depth"
-    wrq = pF "wrq"
-    ggain = pF "ggain"
-    wphase = pF "wphase"
-    strob = pF "strob"
-    ontime = pF "ontime"
-    offtime = pF "offtime"
-    sphase = pF "sphase"
-    toffset = pF "toffset"
-    tdepth = pF "tdepth"
-    trate = pF "trate"
-    tphase = pF "tphase"
-    dwidth = pF "dwidth"
-    drate = pF "drate"
-    iphase = pF "iphase"
-    midfreq = pF "midfreq"
-    hifreq = pF "hifreq"
-    lwidth = pF "lwidth"
-    lrate = pF "lrate"
+    -- FXs Orbs
     sfreq = pF "sfreq"
     wet10 = pF "wet10"
     wet20 = pF "wet20"
@@ -96,8 +74,48 @@ let p = streamReplace tidal
     wet60 = pF "wet60"
     wet70 = pF "wet70"
     wet80 = pF "wet80"
+    -- aliases
+    pitch = wet10 -- only in orb 3
+    -- will align only with orbs 0 to 2:
+    tape = wet10
+    wah = wet20
+    llfo = wet30
+    comp = wet40
+    ampFin = wet50
+    -- pitchShift
+    pideg = pF "pideg"
+    pdisp = pF "pdisp"
+    tdisp = pF "tdisp"
+    slide = pF "slide"
+    -- tape
+    toffset = pF "toffset"
+    tdepth = pF "tdepth"
+    trate = pF "trate"
+    tphase = pF "tphase"
+    -- compressor
+    cctrl = pI "cctrl"
+    thresh = pF "thresh"
+    slopea = pF "slopea"
+    clamp = pF "clamp"
+    relax = pF "relax"
+    -- wah
+    wrate = pF "wrate"
+    depth = pF "depth"
+    sinsaw = pI "sinsaw"
+    jfreq = pF "jfreq"
+    jdepth = pF "jdepth"
+    -- lfo
+    sisap = pI "sisap"
+    lrate = pF "lrate"
+    iphase = pF "iphase"
+    lwidth = pF "lwidth"
+    midfreq = pF "midfreq"
+    hifreq = pF "hifreq"
+    -- ampFin
+    postAmp = pF "postAmp"
+    -- -------------------
     vrate = pF "vrate"
-    vibrato = pF "vibrato"
+    -- vibrato = pF "vibrato"
     vel = pF "vel"
     modind = pF "modind"
     mix = pF "mix"
@@ -105,40 +123,21 @@ let p = streamReplace tidal
     crunchy = pF "crunchy"
     res = pF "res"
     lfodepth = pF "lfodepth"
-    postAmp = pF "postAmp"
-    slopea = pF "slopea"
-    relax = pF "relax"
-    sinsaw = pI "sinsaw"
-    dcurve = pI "dcurve"
-    ftype = pI "ftype"
-    scurve = pI "scurve"
-    ngain = grp [mF "n", mF "amp"]
-    pitch = wet10
-    tape = wet20
-    hole = wet30
-    wah = wet40
-    llfo = wet50
-    comp = wet60
-    ampFin = wet70
     sind = pF "sind"
     smul = pF "smul"
     satur = pF "satur"
-    sisap = pI "sisap"
     lbhnp = pI "lbhnp"
     fres = pF "fres"
-    wdepth = pF "wdepth"
-    wring = pF "wring"
-    wgain = pF "wgain"
-    cctrl = pI "cctrl"
-    thresh = pF "thresh"
-    slopeb = pF "slopeb"
-    clamp = pF "clamp"
+    -- change midi note and amp at once
+    ngain = grp [mF "n", mF "amp"]
+    -- vst reverbs -----------------
     vwet = pF "vwet"
     vdry = pF "vdry"
     vdelay = pF "vdelay"
     vsize = pF "vsize"
     vlocut = pF "vlocut"
     vhicut = pF "vhicut"
+    -- ? -------------------------
     deltas = pI "deltas"
     hrate = pF "hrate"
     damp = pF "damp"
@@ -146,6 +145,8 @@ let p = streamReplace tidal
     hdif = pF "hdif"
     hfb = pF "hfb"
     cof x = ccv x # ccn 2
+    -- phosycon ---------------
+    cutoff x = ccv x # ccn 2
     reson x = ccv x # ccn 3
     sweept x = ccv x # ccn 4
     envmod x = ccv x # ccn 5
