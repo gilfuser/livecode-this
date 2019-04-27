@@ -98,7 +98,7 @@ SynthDef(\bow, { |out, freq, amp=0.5, force=1, /*gate, */ pos=0.07, c1=0.25, c3=
 );
 
 (
-SynthDef(\windsaw, { | out, offset, sustain = 1, freq, attack = 0.1, release = 5, decay = 3, amp = 0.3, /*maxosc = 20, loosc = 6,*/ maxamp = 2.5, loamp = 0.1, gate = 1, pan |
+SynthDef(\windsaw, { | out, offset, sustain = 1, freq, attack = 0.1, release = 5, decay = 3, amp = 0.3, /*maxosc = 20, loosc = 6,*/ maxamp = 2.5, loamp = 0.1, gate = 1, pan, accelerate |
 	var snd, env;
 	env = Env.adsr(
 		attackTime: attack,
@@ -108,10 +108,10 @@ SynthDef(\windsaw, { | out, offset, sustain = 1, freq, attack = 0.1, release = 5
 		peakLevel: amp
 	).kr(doneAction: 2, /*gate: gate, */ timeScale: sustain);
 	snd = LFSaw.ar(
-		freq: freq*[2, 3, 4]/6,
+		freq: (freq*[2, 3, 4]/6) * Line.kr(1,accelerate+1, sustain);,
 		mul: env /* * SinOsc.kr(freq: XLine.kr(maxosc, loosc, 5).range(maxamp, loamp))*/ );
 	snd = snd + LFTri.ar(
-		freq: freq,
+		freq: freq * Line.kr(1,accelerate+1, sustain);,
 		mul: env * SinOsc.kr(freq: LFTri.kr((sustain * 10).reciprocal, 3).exprange(loamp, maxamp)));
 	snd = Splay.ar(snd);
 	OffsetOut.ar(out,
