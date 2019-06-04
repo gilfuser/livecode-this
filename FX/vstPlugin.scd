@@ -1,11 +1,12 @@
 {
+	// create buffers to control the reverbs
 	~vwet = Bus.control(s, 4);
 	~vdry = Bus.control(s, 4);
 	~vdelay = Bus.control(s, 4);
 	~vsize = Bus.control(s, 4);
 	~vlocut = Bus.control(s, 4);
 	~vhicut = Bus.control(s, 4);
-
+	// set initial values to it
 	~vwet.setn([0.2, 0.2, 0.3, 0.2]);
 	~vdry.setn(1!4);
 	~vdelay.setn([0.1, 0.1, 0.125, 0.15]);
@@ -13,15 +14,13 @@
 	~vlocut.setn([0.7, 0.7, 0.64, 0.64]);
 	~vhicut.setn([0.25, 0.25, 0.125, 0.125]);
 
-	(
-		SynthDef(\masterFX, { | in out bypass = 0 |
-			ReplaceOut.ar(out, VSTPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
-		}).add;
+	SynthDef(\masterFX, { | in out bypass = 0 |
+		ReplaceOut.ar(out, VSTPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
+	}).add;
 
-		SynthDef.new(\vst_insert, { | in out bypass=0 |
-			ReplaceOut.ar(out, VSTPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
-		}).add;
-	);
+	SynthDef.new(\vst_insert, { | in out bypass=0 |
+		ReplaceOut.ar(out, VSTPlugin.ar( In.ar(in, ~dirt.numChannels), ~dirt.numChannels, bypass ));
+	}).add;
 
 	0.1.wait;
 	~masterFxGroup = Group.after(1); // after default group
@@ -39,13 +38,33 @@
 	~molotcomp.editor;
 	" \n molot loaded  \n".postln;
 
-	~fxGroupO0 = Group.after(1);
+
+	/*	~fxGroupEqHi = Group.after(1);
+	0.1.wait;
+
+	~eqHi = VSTPluginController( Synth(\vst_insert, [ \in, [4,6], \out, [4,6] ], ~fxGroupEqHi, addAction: \addToTail));
+	0.1.wait;
+	~eqHi.open( "/home/gilfuser/.wine/drive_c/Program Files/Steinberg/VSTPlugins/TDR Nova.so",  info: true, gui: \vst );
+	2.wait;
+	s.sync;
+	~eqHi.readProgram("/home/gilfuser/vst/orb2eqPedras.fxp");
+	s.sync;
+	~eqHi.showGui;
+	" \n nova at orb 2 loaded  \n".postln;
+	~eqHi.close
+	~eqOrb0.close;
+	*/
+
+	~fxGroupO0 = Group.after(1); // after default group
 	0.1.wait;
 
 	~eqOrb0 = VSTPluginController( Synth(\vst_insert, [ \in, 2, \out, 2 ], ~fxGroupO0, addAction: \addToTail));
 	0.1.wait;
 	~eqOrb0.open( "/home/gilfuser/.wine/drive_c/Program Files/Steinberg/VSTPlugins/TDR Nova.so",  info: true, editor: true );
-	10.wait;
+	12.wait;
+	/*
+	~eqOrb0.close;
+	*/
 	s.sync;
 	~eqOrb0.readProgram("/home/gilfuser/vst/orb0eqPedras.fxp");
 	0.1.wait;
@@ -62,8 +81,6 @@
 	s.sync;
 	~verbOrb0.editor;
 	0.1.wait;
-	/*
-	*/
 
 	s.sync;
 
@@ -77,7 +94,8 @@
 	/*
 	~verbOrb0.close;
 	~verbOrb0.free;
-	~verbOrb0.info;
+	// ~verbOrb0.info;
+	s.sync;
 	*/
 
 	~fxGroupOrb1 = Group.after(1);
@@ -85,7 +103,7 @@
 	s.sync;
 	/*
 
-	~eqOrb1 = VstPluginController( Synth(\vst_insert, [ \in, 4, \out, 4 ], ~fxGroupOrb1, addAction: \addToTail));
+	~eqOrb1 = VSTPluginController( Synth(\vst_insert, [ \in, 4, \out, 4 ], ~fxGroupOrb1, addAction: \addToTail));
 	0.1.wait;
 	~eqOrb1.open( "/home/gilfuser/.wine/drive_c/Program Files/Steinberg/VSTPlugins/TDR Nova.so",  info: true, gui: \vst );
 	2.wait;
@@ -102,9 +120,8 @@
 	~verbOrb1.open( "/home/gilfuser/vst/talverb4/TAL-Reverb-4-64.so",  info: true, editor: true );
 	2.wait;
 	~verbOrb1.readProgram("/home/gilfuser/vst/orb1verb.fxp");
-	/*s.sync;
+	s.sync;
 	~verbOrb1.editor;
-	*/
 	s.sync;
 	~verbOrb1.map(1, ~vwet.subBus(1));
 	~verbOrb1.map(2, ~vdry.subBus(1));
@@ -127,7 +144,7 @@
 	1.wait;
 	~eqOrb2.readProgram("/home/gilfuser/vst/orb2eqPedras.fxp");
 	s.sync;
-	// ~eqOrb2.editor;
+	~eqOrb2.editor;
 	"nova at orb 3 loaded".postln;
 	/*
 	~eqOrb2.close
@@ -139,8 +156,8 @@
 	1.wait;
 	~verbOrb2.readProgram("/home/gilfuser/vst/orb2verb.fxp");
 	s.sync;
-	/*~verbOrb2.editor;
-	s.sync;*/
+	~verbOrb2.editor;
+	s.sync;
 	~verbOrb2.map(1, ~vwet.subBus(2));
 	~verbOrb2.map( 2, ~vdry.subBus(2));
 	~verbOrb2.map(3, ~vdelay.subBus(2));
@@ -156,7 +173,7 @@
 	0.1.wait;
 	s.sync;
 
-	/*~eqOrb3 = VstPluginController( Synth(\vst_insert, [ \in, 8, \out, 8 ], ~fxGroupOrb3, addAction: \addToTail));
+	/*~eqOrb3 = VSTPluginController( Synth(\vst_insert, [ \in, 8, \out, 8 ], ~fxGroupOrb3, addAction: \addToTail));
 	0.1.wait;
 	~eqOrb3.open( "/home/gilfuser/.wine/drive_c/Program Files/Steinberg/VSTPlugins/TDR Nova.so",  info: true, gui: \vst );
 	1.wait;
@@ -173,8 +190,8 @@
 	1.wait;
 	~verbOrb3.readProgram("/home/gilfuser/vst/orb3verb.fxp");
 	s.sync;
-	/*~verbOrb3.editor;
-	s.sync;*/
+	~verbOrb3.editor;
+	s.sync;
 	~verbOrb3.map( 1, ~vwet.subBus(3) );
 	~verbOrb3.map( 2, ~vdry.subBus(3) );
 	~verbOrb3.map( 3, ~vdelay.subBus(3) );
@@ -186,24 +203,27 @@
 	~verbOrb3.close;
 	*/
 
-	(
-		SynthDef(\vst_istrument, {arg out;
-			OffsetOut.ar(out, VstPlugin.ar(nil, ~dirt.numChannels));
-		}).add;
-	);
-	0.1.wait;
-	/*~talnoise = VstPluginController( Synth(\vst_istrument) );
-	~talnoise.open( "/home/gilfuser/vst/TAL-noiseMaker/TAL-NoiseMaker-64.so",  info: true, editor: true );
-	~talnoise.editor;*/
+    (
+        SynthDef(\vst_istrument, {arg out;
+            OffsetOut.ar(out, VSTPlugin.ar(nil, ~dirt.numChannels));
+        }).add;
+    );
+    0.1.wait;
+    // ~talnoise = VSTPluginController( Synth(\vst_istrument) );
+    // ~talnoise.open( "/home/gilfuser/vst/TAL-noiseMaker/TAL-NoiseMaker-64.so",  info: true, editor: true );
+    // ~talnoise.editor;
 
-	// "/home/gilfuser/.wine/drive_c/Program Files/VstPlugins/AudioRealism/ABL3/ABL3(x64).so"
-
-	~acid = VSTPluginController( Synth(\vst_istrument, [\out, Ndef(\orb3).bus]) );
-	0.1.wait;
-	~acid.open( "/home/gilfuser/.wine/dosdevices/c:/users/gilfuser/Downloads/D16 Group 201805 NO INSTALL/C/Program Files/VstPlugins/D16 Group x64/Phoscyon x64.so",  info: true, editor: true );
-	10.wait;
-	// ~acid.writeProgram("/home/gilfuser/vst/phosycon.fxp");
-	~acid.readProgram("/home/gilfuser/vst/phosycon.fxp");
+    ~acid = VSTPluginController( Synth(\vst_istrument, [\out, Ndef(\orb3).bus]) );
+    0.1.wait;
+    ~acid.open( "/home/gilfuser/.wine/dosdevices/c:/users/gilfuser/Downloads/D16 Group 201805 NO INSTALL/C/Program Files/VstPlugins/D16 Group x64/Phoscyon x64.so",  info: true, editor: true );
+    10.wait;
+//
+    ~acid.gui;
+    ~acid.readProgram("/home/gilfuser/vst/phosycon.fxp");
+    ~acid.editor;
+    ~acid.setTempo(90);
+    0.1.wait;
+    ~dirt.soundLibrary.addMIDI(\acid, ~acid.midi);
 	/*
 	~acid.editor;
 	~acid.gui;
@@ -214,10 +234,6 @@
 	~acid.currentProgram
 	~acid.numParameters
 	*/
-	~acid.setTempo(110);
-	0.1.wait;
-	~dirt.soundLibrary.addMIDI(\acid, ~acid.midi);
 }.fork
 
-/* 'p1' controls the plugin parameter 1. 'p2' controls a parameter whose index can be set dynamically with 'idx'. */
 // having one Synth per VstPlugin has the advantage that you can change the FX order on the fly with .moveAfter / .moveBefore.

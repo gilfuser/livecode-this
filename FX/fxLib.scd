@@ -7,7 +7,7 @@ q.views = q.views ? ();
 Pdefn(\scaleA, Scale.choose(7, 12).tuning_(Tuning.choose(12)));
 Pdefn(\scaleA).source.name;
 Pdefn(\scaleA).source.tuning;
-q.deltas = Bus.control(s, 4).setn(1!4);
+q.deltas = Bus.control(s, 5).setn(1!5);
 q.busses = ~dirt.orbits.collect { |x| x.outBus };
 	s.sync;
 );
@@ -40,10 +40,12 @@ q.fx.fxLib = IdentityDictionary [
 	},
 
 	// Greyhole is beautifull but too CPU expensive
+	/*
 	'hole' -> {  | in , hrate = 0.1, damp = 0.1, hsize = 1, hdif = 0.707, hfb = 0.1, cps /*, hhpf, hlpf*/ |
 		var delayTime = (hrate * {TempoClock.default.tempo}).reciprocal.lag(0.2);
 		Greyhole.ar( in, delayTime, damp, hsize.lag(0.2), hdif, hfb, modDepth: 0.2 );
 	},
+	*/
 
 	// needs some love too. duck is a reference
 	'llfo' -> { | in  sisap=0/*tempo */ lrate=1 iphase=0 lwidth=0.5, midfreq=60 , hifreq=20000 |
@@ -57,7 +59,7 @@ q.fx.fxLib = IdentityDictionary [
 	},
 
 	'wah' -> { |in wrate = 1 depth = 0.5 sinsaw = 0 /*wphase = 0 */jfreq = 1 jdepth = 0 |
-		var  wring = 0.002, wrq = 0.8,  ggain = 1 ;
+		var  wring = 0.002, wrq = 0.8,  ggain = 1.25 ;
 		var jitter = LFNoise2.ar(jfreq, jdepth);
 		var mod = Select.kr(sinsaw, [
 			SinOsc.ar( wrate, ( jitter * 2pi) % 2pi, depth).exprange(100, 5000),
@@ -68,7 +70,7 @@ q.fx.fxLib = IdentityDictionary [
 		Limiter.ar(sig, 0.9);
 	},
 
-	'comp' -> { | in cctrl = 0 thresh = 0.25 slopea = 0.5 clamp = 0.001 relax = 0.1 deltas = 0 |
+	'comp' -> { | in cctrl = 0 thresh = 0.25 slopea = 0.5 clamp = 0.001 relax = 0.1 deltas = 1 |
 		var deltaSel = Select.kr(deltas, q.deltas);
 		var bus = Select.kr(cctrl, q.busses);
 		var comp = Compander.ar( in, In.ar( bus, ~dirt.numChannels), thresh.linexp(0, 1, 0.001, 1), 1, slopea, clamp, relax * deltas );
@@ -107,11 +109,13 @@ Spec.add(\deltas, [0, 4, 1, 1]);
 Spec.add(\delta, [0.01, 10]);
 
 //hole
+/*
 Spec.add(\damp, [0, 1]);
 Spec.add(\hrate, [0, 2]);
 Spec.add(\hsize, [0.5, 3]);
 Spec.add(\hdif, [0, 1]);
 Spec.add(\hfb, [0, 1]);
+*/
 
 //ampFin
 Spec.add( \limDrive, \ampx4 );

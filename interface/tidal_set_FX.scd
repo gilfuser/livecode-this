@@ -4,7 +4,7 @@ OSCdef(\oscFromTidal, { |msg|
 }, '/play2').permanent_(true)
 );
 
-MFdef(\theHub).add(\post, {|msg| msg.postln});
+// MFdef(\theHub).add(\post, {|msg| msg.postln});
 /*
 MFdef(\theHub).enable(\post);
 MFdef(\theHub).disable(\post);
@@ -46,30 +46,37 @@ MFdef(\theHub).add( \tidalSetOrbs,
 			{ \wet40 } { q.orbz.set( key, msg[i+1] ) }
 			{ \wet50 } { q.orbz.set( key, msg[i+1] ) }
 			{ \wet60 } { q.orbz.set( key, msg[i+1] ) }
-			{ \wet70 } { q.orbz.set( key, msg[i+1] ) }
-			{ \wet80 } { q.orbz.set( key, msg[i+1] ) }
+			// { \wet70 } { q.orbz.set( key, msg[i+1] ) }
+			// { \wet80 } { q.orbz.set( key, msg[i+1] ) }
 
-			/* MFdef(\theHub).add(\tape, */
+			/* pitch -*/
+			{ \pideg } { q.orbz.set( key, msg[i+1] ) }
+			{ \pdisp } { q.orbz.set( key, msg[i+1] ) }
+			{ \tdisp } { q.orbz.set( key, msg[i+1] ) }
+			{ \slide } { q.orbz.set( key, msg[i+1] ) }
+
+			/* tape, */
 			{ \trate } { q.orbz.set( key, msg[i+1] ) }
 			{ \tphase } { q.orbz.set( key, msg[i+1] ) }
 			{ \tdepth } { q.orbz.set( key, msg[i+1] ) }
 			{ \toffset } { q.orbz.set( key, msg[i+1] ) }
 
-			/* MFdef(\theHub).add(\comp, */
-			{ \ctrl } { q.orbz.set( key, msg[i+1] ) }
+			/* comp, */
+			{ \cctrl } { q.orbz.set( key, msg[i+1] ) }
 			{ \thresh } { q.orbz.set( key, msg[i+1] ) }
 			{ \slopea } { q.orbz.set( key, msg[i+1] ) }
 			{ \clamp } { q.orbz.set( key, msg[i+1] ) }
 			{ \relax } { q.orbz.set( key, msg[i+1] ) }
+			{ \deltas } { q.orbz.set( key, msg[i+1] ) }
 
-			/* MFdef(\theHub).add(\wah, */
+			/* wah, */
 			{ \wrate } { q.orbz.set( key, msg[i+1] ) }
 			{ \depth } { q.orbz.set( key, msg[i+1] ) }
 			{ \sinsaw } { q.orbz.set( key, msg[i+1] ) }
 			{ \jfreq } { q.orbz.set( key, msg[i+1] ) }
 			{ \jdepth } { q.orbz.set( key, msg[i+1] ) }
 
-			/* MFdef(\theHub).add(\llfo,*/
+			/* lfo,*/
 			{ \sisap} { q.orbz.set( key, msg[i+1] ) }
 			{ \lrate} { q.orbz.set( key, msg[i+1] ) }
 			{ \iphase } { q.orbz.set( key, msg[i+1] ) }
@@ -81,18 +88,20 @@ MFdef(\theHub).add( \tidalSetOrbs,
 			{ \postAmp } { q.orbz.set( key, msg[i+1] ) }
 
 			{ \cps } { q.orbz.set( key, msg[i+1] ) }
-			{ \delta } { q.orbz.set( key, msg[i+1] );
+			{ \delta } {
+                q.orbz.set( key, msg[i+1] );
 				q.deltas.setPairs( q.vstorb, msg[i+1].asFloat )
 			}
 
-			/* vst stuff */
+			/* ---------------- vst stuff --------------------- */
+
+			/* reverb */
 			{ \vwet } { ~vwet.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
 			{ \vdry } { ~vdry.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
 			{ \vdelay } { ~vdelay.setPairs(q.vstorb.asInteger, msg[i+1].asFloat ) }
 			{ \vsize } { ~vsize.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
 			{ \vlocut } { ~vlocut.setPairs(q.vstorb.asInteger, msg[i+1].asFloat ) }
 			{ \vhicut } { ~vhicut.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
-			;
 		}
 	})
 );

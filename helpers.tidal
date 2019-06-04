@@ -1,0 +1,150 @@
+creise =
+    fix (spreadr ($) [density 2, rev, slow 2, striate 3, (# speed ( choose [0.75,0.5,1,1.5]) )]) (n "2 4 8 16")
+o0r = once $
+    "dummy"
+    # tape 0 # trate 0.25 # tphase 0 # tdepth 0.5 # toffset 0.5
+    # wah 0 # wrate 1 # depth 0.75 # sinsaw 0 # jfreq 1 # jdepth 0.1
+    # llfo 0 # sisap 0 # lrate 0 # iphase 0.5 # midfreq 60 # hifreq 20000
+    # comp 0 # cctrl 1 # thresh 0.5 # clamp 0.01 # relax 0.1 
+    # ampFin 1 # postAmp 1 
+    # orbit 0
+
+orbr x =
+    once $
+    fix (
+        (# wet50 0).(# wet60 1)
+    ) (orbit 3) $
+    "dummy"
+    # pitch 0 # pideg 0 # tdisp 0.1 # pdisp 0.05
+    # tape 0 # trate 0.25 # tphase 0 # tdepth 0.5 # toffset 0.5
+    # wah 0 # wrate 1 # depth 0.75 # sinsaw 0 # jfreq 1 # jdepth 0.1
+    # llfo 0 # sisap 0 # lrate 0 # iphase 0.5 # midfreq 60 # hifreq 20000
+    # comp 0 # cctrl 1 # thresh 0.5 # clamp 0.01 # relax 0.1 
+    # ampFin 1 # postAmp 1 
+    +| orbit x
+-- reset all orbs
+orbar =
+    orbr "[0 1 2 3]"
+-- lfoClose = once $
+    -- "dummy"
+    -- # llfo 1 # sisap 0 # lrate 0 # iphase 1 # midfreq 60 # hifreq 200
+-- lfoOpen = once $
+    -- sound "lfoOpen"
+verbr x =
+    once $
+    "dummy"
+    # vwet 0.2
+    # vdry 1
+    # vdelay 0.1
+    # vsize 0.6
+    # vlocut 0.7
+    # vhicut 0.25
+    +| orbit x
+verbar = verbr "[0 1 2 3]"
+cutoff x = ccv x # ccn 2
+reson x = ccv x # ccn 3
+sweept x = ccv x # ccn 4
+envmod x = ccv x # ccn 5
+envatt x = ccv x # ccn 6
+envdec x = ccv x # ccn 7
+accdec x = ccv x # ccn 8
+envacc x = ccv x # ccn 9
+acidcof =
+    p "acidcof" $
+    (12.6 ~>) $ 
+    cutoff (
+        ( slow 64 $ range 8 119 sine )
+        + ( slow 8 $ range "-8" 8 tri )
+        ) # "acid"
+acidres =
+    p "acidres" $
+    (64 ~>) $ 
+    reson ( slow 76 $ ( 127 - range 0 127 tri) ) # "acid"
+acidenm =
+    p "acidenm" $
+    (32 ~>) $
+    envmod (
+        ( slow 64 ( range 64 95 tri) )
+        + ( slow 132 $ range "-64" 32 sine )
+    ) # "acid"
+acidatt =
+    p "acidatt" $
+    (12.6 ~>) $ 
+    envatt (
+        ( slow 48 $ range 16 32 saw )
+        + ( slow 4 $ range "-4" 4 tri )
+        ) # "acid"
+aciddec =
+    p "acidedec" $
+    (12.6 ~>) $ 
+    envdec (
+        ( slow 96 $ range 11 123 saw )
+        + ( slow 6 $ range "-4" 4 tri )
+        ) # "acid"
+acidacd =
+    p "acidacd" $
+    (36 ~>) $ 
+    accdec (
+        ( slow 112 $ range 11 123 tri )
+        + ( slow 4 $ range "-4" 4 tri )
+        ) # "acid"
+acideac =
+    p "acideacc" $
+    (19.84 ~>) $ 
+    envacc (
+        ( slow 84 $ range 0 97 sine )
+        * ( slow 12 $ tri )
+        + 30
+        ) # "acid"
+acidmod =
+    do
+    acidcof
+    acidres
+    acidenm
+    acidatt
+    acidacd
+    acideac
+    aciddec
+acidmstop =
+    do
+    p "acidcof" silence
+    p "acidres" silence
+    p "acidenm" silence
+    p "acidatt" silence
+    p "acidacd" silence
+    p "acideac" silence
+    p "aciddec" silence
+acidcomp =
+    once $
+    "dummy"
+    # wet10 0.5
+    # wet50 1
+    -- # slopea 0.33
+    # postAmp 2
+    # orbit 3
+acidr =
+    once $
+    "acid"
+    # cutoff 25
+    # reson 20
+    # sweept 64
+    # envmod 64
+    # envatt 12
+    # envdec 7
+    # accdec 7
+    # envacc 30
+submarino =
+    p "submarino" $
+        seqP [
+        (0, 8,
+            sound "feelfx"
+            |+| n "[0!3 2]/4"
+            # tremolorate (slow 4 $ "2 8 4 3 1.5")
+            # tremolodepth 1
+            # pan (slow 5 $ "0 0.75 0.5 0.25 1”)")
+            # orbit 3
+        )
+        ]
+
+TODO: tape0 x y z w= once $ tape x # trate y
+TODO: verb away / verb front

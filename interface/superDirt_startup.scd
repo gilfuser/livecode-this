@@ -1,7 +1,10 @@
 q = q ? ();
 {
 	~dirt.stop;
-	0.1.wait;
+    /*
+    ~dirt.freeAllSoundFiles;
+	*/
+    0.1.wait;
 	~dirt.free;
 	0.1.wait;
 	~dirt = SuperDirt(2, s);
@@ -9,14 +12,18 @@ q = q ? ();
 	~dirt.start(57120, ([2, 4, 6, 8]));
 	s.sync;
 	0.1.wait;
-	~dirt.loadSoundFiles;
+	~dirt.loadSoundFiles("~/CAMPO/samples/*");
 	// ~dirt.loadSoundFiles("~/tidal-samples/*/*" );
 	0.1.wait;
+
+    "./synths/tidalInstruments.scd".asRelativePath.load;
 
 	q.orb0 = ~dirt.orbits[0];
 	q.orb1 = ~dirt.orbits[1];
 	q.orb2 = ~dirt.orbits[2];
 	q.orb3 = ~dirt.orbits[3];
+
+    // "./interface/sync-to-tidal-02.scd".asRelativePath.load;
 
 	0.1.wait;
 	Ndef(\orb0).ar(~dirt.numChannels);
@@ -25,10 +32,10 @@ q = q ? ();
 	Ndef(\orb3).ar(~dirt.numChannels);
 
 	0.1.wait;
-	Ndef(\orb0).proxyspace.quant_(p.quant);
-	Ndef(\orb1).proxyspace.quant_(p.quant);
-	Ndef(\orb2).proxyspace.quant_(p.quant);
-	Ndef(\orb3).proxyspace.quant_(p.quant);
+	// Ndef(\orb0).proxyspace.quant_(p.quant);
+	// Ndef(\orb1).proxyspace.quant_(p.quant);
+	// Ndef(\orb2).proxyspace.quant_(p.quant);
+	// Ndef(\orb3).proxyspace.quant_(p.quant);
 	0.1.wait;
 	q.orb0.outBus = Ndef(\orb0).bus;
 	q.orb1.outBus = Ndef(\orb1).bus;
@@ -36,18 +43,19 @@ q = q ? ();
 	q.orb3.outBus = Ndef(\orb3).bus;
 	0.1.wait;
 
+
 	Ndef(\orb0).play(2);
 	Ndef(\orb1).play(4);
 	Ndef(\orb2).play(6);
 	Ndef(\orb3).play(8);
 
 	1.wait;
-	"../synths/tidalInstruments*".loadRelative;
+    "./synths/tidalInstruments.scd".asRelativePath.load;
 
-	~dirt.loadSynthDefs("../synths/tidalInstruments*");
+	~dirt.loadSynthDefs("../synths/tidalInstruments.scd");
 
 	1.wait;
-	"../FX/myTidalFx*".loadRelative;
+	"FX/myTidalFx.scd".asRelativePath.load;
 
 	Ndef(\allOrbs, {
 		var in = [ InFeedback.ar( [2, 4, 6, 8] ,1), InFeedback.ar( [3, 5, 7, 9] ,1) ];
@@ -61,7 +69,7 @@ q = q ? ();
 		(
 			 ~dirt.orbits.do { |x|
 				//{
-				var event = x.defaultParentEvent /*q.orb3*/;
+				var event = x.defaultParentEvent; //q.orb3;
 				var pitchEvent = Event.partialEvents.pitchEvent.copy;
 				[\freq, \midinote, \octave].do(event.removeAt(_));
 				event.parent = pitchEvent;
@@ -74,7 +82,7 @@ q = q ? ();
 		(
 			 ~dirt.orbits.do { |x|
 			//{
-				var event = x.defaultParentEvent;/*q.orb3*/
+				var event = x.defaultParentEvent;// q.orb3
 				var pitchEvent = Event.partialEvents.pitchEvent.copy;
 				var scale, tuning;
 				pitchEvent.use {
