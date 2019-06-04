@@ -1,4 +1,3 @@
-// Here are mine
 
 (
 SynthDef(\dummy, { |out, sustain = 1, speed = 1, begin = 0, end = 1, pan, accelerate, offset|

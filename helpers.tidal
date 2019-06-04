@@ -1,3 +1,5 @@
+setcps(110/60/4)
+
 creise =
     fix (spreadr ($) [density 2, rev, slow 2, striate 3, (# speed ( choose [0.75,0.5,1,1.5]) )]) (n "2 4 8 16")
 o0r = once $

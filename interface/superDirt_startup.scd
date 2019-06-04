@@ -9,102 +9,55 @@ q = q ? ();
 	0.1.wait;
 	~dirt = SuperDirt(2, s);
 	s.sync;
-	~dirt.start(57120, ([2, 4, 6, 8]));
+	~dirt.start(57120, 0!4);
 	s.sync;
 	0.1.wait;
-	~dirt.loadSoundFiles("~/CAMPO/samples/*");
-	// ~dirt.loadSoundFiles("~/tidal-samples/*/*" );
+	~dirt.loadSoundFiles; //("~/CAMPO/samples/*"); // your own samples directory
 	0.1.wait;
 
-    "./synths/tidalInstruments.scd".asRelativePath.load;
+	// "./synths/tidalInstruments.scd".asRelativePath.load;
+	// if you are using SCNvim uncomment above and comment the line below: (more of those changes down)
+    "../synths/tidalInstruments*".loadRelative;
 
 	q.orb0 = ~dirt.orbits[0];
 	q.orb1 = ~dirt.orbits[1];
 	q.orb2 = ~dirt.orbits[2];
 	q.orb3 = ~dirt.orbits[3];
 
-    // "./interface/sync-to-tidal-02.scd".asRelativePath.load;
-
 	0.1.wait;
+
 	Ndef(\orb0).ar(~dirt.numChannels);
 	Ndef(\orb1).ar(~dirt.numChannels);
 	Ndef(\orb2).ar(~dirt.numChannels);
 	Ndef(\orb3).ar(~dirt.numChannels);
 
 	0.1.wait;
-	// Ndef(\orb0).proxyspace.quant_(p.quant);
-	// Ndef(\orb1).proxyspace.quant_(p.quant);
-	// Ndef(\orb2).proxyspace.quant_(p.quant);
-	// Ndef(\orb3).proxyspace.quant_(p.quant);
-	0.1.wait;
+
 	q.orb0.outBus = Ndef(\orb0).bus;
 	q.orb1.outBus = Ndef(\orb1).bus;
 	q.orb2.outBus = Ndef(\orb2).bus;
 	q.orb3.outBus = Ndef(\orb3).bus;
 	0.1.wait;
 
-
-	Ndef(\orb0).play(2);
-	Ndef(\orb1).play(4);
-	Ndef(\orb2).play(6);
-	Ndef(\orb3).play(8);
+	Ndef(\orb0).play;
+	Ndef(\orb1).play;
+	Ndef(\orb2).play;
+	Ndef(\orb3).play;
 
 	1.wait;
-    "./synths/tidalInstruments.scd".asRelativePath.load;
+
+	// "../synths/tidalInstruments.scd".asRelativePath.load;
+	// SCNvim users: swap these lines above and below too ...
+	"../synths/tidalInstruments*".loadRelative;
 
 	~dirt.loadSynthDefs("../synths/tidalInstruments.scd");
 
-	1.wait;
-	"FX/myTidalFx.scd".asRelativePath.load;
+	0.2.wait;
 
-	Ndef(\allOrbs, {
-		var in = [ InFeedback.ar( [2, 4, 6, 8] ,1), InFeedback.ar( [3, 5, 7, 9] ,1) ];
-		OffsetOut.ar(0, in)
-	}).play;
+	// "FX/myTidalFx.scd".asRelativePath.load;
+	// ... and these
+	"../FX/myTidalFx.scd".loadRelative;
 
 	"super-dirt prepared".postln;
 }.fork;
 
-	/*(
-		(
-			 ~dirt.orbits.do { |x|
-				//{
-				var event = x.defaultParentEvent; //q.orb3;
-				var pitchEvent = Event.partialEvents.pitchEvent.copy;
-				[\freq, \midinote, \octave].do(event.removeAt(_));
-				event.parent = pitchEvent;
-				};
-		);
-
-
-		// if we want to pick scales and tunings by name
-		// this works only when synths use \freq as argument
-		(
-			 ~dirt.orbits.do { |x|
-			//{
-				var event = x.defaultParentEvent;// q.orb3
-				var pitchEvent = Event.partialEvents.pitchEvent.copy;
-				var scale, tuning;
-				pitchEvent.use {
-					~freq = {
-						if(~note != 0) { ~degree = ~note }; // interpret n as note (might be also degree)
-						~scaleName !? {
-							scale = Scale.at(~scaleName);
-							scale !? {
-								~scale = scale;
-								~tuningName !? {
-									tuning = Tuning.at(~tuningName);
-									tuning !? { ~scale = ~scale.copy; ~scale.tuning = tuning };
-								}
-							}
-						};
-						(~midinote.value + ~ctranspose).midicps * ~harmonic;
-					};
-
-					[\freq, \midinote, \octave].do(event.removeAt(_));
-
-					event.parent = pitchEvent;
-				}
-			};
-		)
-	);*/

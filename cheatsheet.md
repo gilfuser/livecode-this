@@ -1,12 +1,12 @@
 # Cheatsheet
 
-### Some of my own customized stuff and some other stuff I tend to forget
+## Some of my own customized stuff and some other stuff I tend to forget
 
 ## (Neo)Vim Stuff (mostly from init.vim)
 
 ### NerdTree
 
-####  open NerdTree > leader + n
+#### open NerdTree > leader + n
 #### open buffer in a new tab staying in NerdTree > T
 
 ### Navigation

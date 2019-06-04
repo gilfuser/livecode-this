@@ -1,36 +1,20 @@
 (
 s.waitForBoot({
 	q = q ? ();
-	if(p == Ndef.dictFor(s) ) {p=nil} {p = Ndef.dictFor(s).quant_(4)};
-	0.1.wait;
-	"interface/superDirt_startup.scd".load; // this will load "synths/tidalInstruments.scd" and myTidalFx.scd
+	if ()
+	// this will load "synths/tidalInstruments.scd" and FX/myTidalFx.scd:
+	"interface/superDirt_startup.scd".loadRelative;
+	// if you are using SCNvim change loadRelative to load, like this:
+	// "interface/superDirt_startup.scd".load;
 	10.wait;
-	"FX/vstPlugin.scd".load;
+	"FX/vstPlugin.scd".loadRelative;
     // s.sync;
 	30.wait;
-	"FX/fxLib.scd".load;
+	"FX/fxLib.scd".loadRelative;
 	0.1.wait;
-	"FX/FXXX_orbs.scd".load;
+	"FX/FXXX_orbs.scd".loadRelative;
 	0.5.wait;
 	s.meter;
-	"interface/tidal_set_FX.scd".load;
+	"interface/tidal_set_FX.scd".loadRelative;
 });
 );
-
-s.meter;
-
-s.boot;
-
-s.quit;
-
-r = Recorder(s)
-
-.numChannels_(10);
-
-r.record
-
-r.record("/media/gilfuser/TOSHIBA EXT/TRABALHO/CAMPO/Recordings/2019-05-25_SescInterL.aiff", numChannels:2)
-
-r.stopRecording
-
-().play
