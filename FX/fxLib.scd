@@ -1,6 +1,6 @@
-q=q ? ();
+q = q ? ();
 q.fx = q.fx ? ();
-q.views = q.views ? ();
+// q.views = q.views ? ();
 
 // for pitch:
 {(
@@ -146,7 +146,7 @@ Spec.add( \cps, [ 0.1, 10]);
 
 // lLFO
 Spec.add( \iphase, [ 0.001, 1, \exp, 0, 0.5 ]);
-Spec.add(\hifreq, [200, 20000, \exp, 0, 220, units: " Hz"]);
+Spec.add(\hifreq, [200, 20000, \exp, 0, 220, "Hz"]);
 Spec.add( \lwidth, [ 0, 1 ]);
 Spec.add(\sisap, [0, 2, \lin, 1, 1]);
 Spec.add( \lrate, [ 0, 16, \lin, 0.125, 1 ]);

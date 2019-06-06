@@ -2,78 +2,122 @@
 
 ## Some of my own customized stuff and some other stuff I tend to forget
 
-## (Neo)Vim Stuff (mostly from init.vim)
+- [Navigation](#navigation)
+- [Select and Change](#select-and-change)
+- [NERD Commenter](#nerd-commenter)
+- [Easy Motion](#easy-motion)
+- [Vim-Tidal](#vim-tidal)
 
-### NerdTree
+---
 
-#### open NerdTree > leader + n
-#### open buffer in a new tab staying in NerdTree > T
+## (Neo)Vim Stuff
+
+> Some come from plugins and others are from mappings. You will find it in the init.vim file
 
 ### Navigation
 
-#### Between tabs > Alt + h or l
+#### Between tabs
+
+Alt + h or l
 
 #### smoothly scroll up
+
 Ctrl e
 
 #### smoothly scroll down
+
 Ctrl y
 
-#### move lines up and down > leader + Alt + [ j k ]
+#### move lines up and down
+
+\<leader> + Alt + [ j k ]
+
+[Back To The Top](#cheatsheet)
+
+### Select and Change
 
 #### find and substitute a little bit faster
- <leader>7 
 
-#### linewise:
-<leader>8
+ \<leader>7
+
+#### linewise
+
+\<leader>8
 
 #### Select word faster
-<leader>w
 
-####... and change
-<leader>q
+\<leader>w
+
+#### ... and change it
+
+\<leader>q
 
 #### to select in between "" [] {} () <>
-<leader> 
-"" <A-2>
-[] <A-8>
-{} <A-7>
-() <A-9>
-<> <A-y>
+
+\<leader>  
+"" \<A-2>  
+[] \<A-8>  
+{} \<A-7>  
+() \<A-9>  
+<> \<A-y>
 
 #### select whole line from last to first non-empty char
-<leader>l
+
+\<leader>l
 
 #### Create line without leaving mode
-down:
-<localleader>o
-up:
-<localleader>O
+
+down:  
+\<localleader>o  
+up:  
+\<localleader>O
 
 #### go back to last edit
-<A-#>
-<A-'>
+
+\<A-#>  
+\<A-'>
 
 #### turn search highlight off
-<leader><A-n>
 
-#### go to mark and (sometimes not working) put it the middle of screen
-'a...z
+\<leader>\<A-n>
 
-#### turn search highlight off
-<leader><A-n>
+#### go to mark and put it the middle of screen
+
+' a...z
+
+[Back To The Top](#cheatsheet)
 
 ### NERD Commenter
-<Leader>cc
+
+#### comment
+
+\<leader>cc
+
+#### invert comment
+
+\<leader>ci
 
 ### Easy Motion
 
 #### search forward and backwards
-<Leader>s
 
-#### all the oder search modes follow the normal jumping mappings
+\<leader>s
 
-### vim-tidal
+> all the oder search modes follow the normal jumping mappings
 
-#### <localleader>s'.i.' :TidalPlay '.i.'
+### **TODO:** Ultisnips
 
+---
+
+## Vim-Tidal
+
+### silence a pattern
+
+```<localleader>[pattern number]```
+
+> let's say you want to silence ```p 1 $ "bd"``` and your localleader is **ä** as mine.  
+Then press ```ä + 1```
+
+### **TODO:** more vim-tidal stuff
+
+[Back To The Top](#cheatsheet)

@@ -10,7 +10,6 @@ o0r = once $
     # comp 0 # cctrl 1 # thresh 0.5 # clamp 0.01 # relax 0.1 
     # ampFin 1 # postAmp 1 
     # orbit 0
-
 orbr x =
     once $
     fix (
@@ -43,14 +42,15 @@ verbr x =
     # vhicut 0.25
     +| orbit x
 verbar = verbr "[0 1 2 3]"
-cutoff x = ccv x # ccn 2
-reson x = ccv x # ccn 3
-sweept x = ccv x # ccn 4
-envmod x = ccv x # ccn 5
-envatt x = ccv x # ccn 6
-envdec x = ccv x # ccn 7
-accdec x = ccv x # ccn 8
-envacc x = ccv x # ccn 9
+-- acid parameters
+-- cutoff
+-- reson
+-- sweept
+-- envmod
+-- envatt
+-- envdec
+-- accdec
+-- envacc
 acidcof =
     p "acidcof" $
     (12.6 ~>) $ 
@@ -147,6 +147,14 @@ submarino =
             # orbit 3
         )
         ]
+-- talnoise parameters
+-- reson x = ccv x # ccn 3
+-- sweept x = ccv x # ccn 4
+-- envmod x = ccv x # ccn 5
+-- envatt x = ccv x # ccn 6
+-- envdec x = ccv x # ccn 7
+-- accdec x = ccv x # ccn 8
+-- envacc x = ccv x # ccn 9
 
 TODO: tape0 x y z w= once $ tape x # trate y
 TODO: verb away / verb front

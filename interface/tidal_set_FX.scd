@@ -4,16 +4,15 @@ OSCdef(\oscFromTidal, { |msg|
 }, '/play2').permanent_(true)
 );
 
-// MFdef(\theHub).add(\post, {|msg| msg.postln});
 /*
+MFdef(\theHub).add(\post, {|msg| msg.postln});
 MFdef(\theHub).enable(\post);
 MFdef(\theHub).disable(\post);
 */
 
 q.orbz = Ndef(\orb0);
 q.vstorb = 0;
-
-// q.allOrbs = [q.fx.orb0.proxy, q.fx.orb1.proxy, q.fx.orb2.proxy, q.fx.orb3.proxy];
+q.verbs = [~verbOrb0, ~verbOrb1, ~verbOrb2, ~verbOrb3];
 
 MFdef(\theHub).add(\setOrb,
 	{ |msg|
@@ -34,7 +33,6 @@ MFdef(\theHub).add(\setVst,
 		};
 	}
 );
-
 (
 MFdef(\theHub).add( \tidalSetOrbs,
 	{ |msg|
@@ -89,19 +87,32 @@ MFdef(\theHub).add( \tidalSetOrbs,
 
 			{ \cps } { q.orbz.set( key, msg[i+1] ) }
 			{ \delta } {
-                q.orbz.set( key, msg[i+1] );
+				q.orbz.set( key, msg[i+1] );
 				q.deltas.setPairs( q.vstorb, msg[i+1].asFloat )
 			}
 
 			/* ---------------- vst stuff --------------------- */
 
 			/* reverb */
-			{ \vwet } { ~vwet.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
-			{ \vdry } { ~vdry.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
-			{ \vdelay } { ~vdelay.setPairs(q.vstorb.asInteger, msg[i+1].asFloat ) }
-			{ \vsize } { ~vsize.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
-			{ \vlocut } { ~vlocut.setPairs(q.vstorb.asInteger, msg[i+1].asFloat ) }
-			{ \vhicut } { ~vhicut.setPairs( q.vstorb.asInteger, msg[i+1].asFloat ) }
+			{ \vwet } { q.verbs[q.vstorb].synth.set( key, msg[i+1].asFloat ) }
+			{ \vdry } { q.verbs[q.vstorb].synth.set( key, msg[i+1].asFloat ) }
+			{ \vdelay } { q.verbs[q.vstorb].synth.set( key, msg[i+1].asFloat ) }
+			{ \vsize } { q.verbs[q.vstorb].synth.set( key, msg[i+1].asFloat ) }
+			{ \vlocut } { q.verbs[q.vstorb].synth.set( key, msg[i+1].asFloat ) }
+			{ \vhicut } { q.verbs[q.vstorb].synth.set( key, msg[i+1].asFloat ) }
+			/* tal-noisemaker */
+			{ \tvolume } { ~talnoise.synth.set(key, msg[i+1].asFloat ) }
+			{ \tcutoff } { ~talnoise.synth.set(key, msg[i+1].asFloat ) }
+			{ \lfo1rate } { ~talnoise.synth.set(key, msg[i+1].asFloat ) }
+			/*phosycon*/
+			{ \acutoff } { ~acid.synth.set(key, msg[i+1].asFloat ) }
+			{ \areson } { ~acid.synth.set(key, msg[i+1].asFloat ) }
+			{ \asweept } { ~acid.synth.set(key, msg[i+1].asFloat ) }
+			{ \aenvmod } { ~acid.synth.set(key, msg[i+1].asFloat ) }
+			{ \aenvatt } { ~acid.synth.set(key, msg[i+1].asFloat ) }
+			{ \aenvdec } { ~acid.synth.set(key, msg[i+1].asFloat ) }
+			{ \aaccdec } { ~acid.synth.set(key, msg[i+1].asFloat ) }
+			{ \aenvacc } { ~acid.synth.set(key, msg[i+1].asFloat ) }
 		}
 	})
 );

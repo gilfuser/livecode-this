@@ -19,6 +19,8 @@ q = q ? ();
 	// if you are using SCNvim uncomment above and comment the line below: (more of those changes down)
     "../synths/tidalInstruments*".loadRelative;
 
+	~dirt.loadSynthDefs("../synths/tidalInstruments.scd");
+
 	q.orb0 = ~dirt.orbits[0];
 	q.orb1 = ~dirt.orbits[1];
 	q.orb2 = ~dirt.orbits[2];
@@ -45,14 +47,6 @@ q = q ? ();
 	Ndef(\orb3).play;
 
 	1.wait;
-
-	// "../synths/tidalInstruments.scd".asRelativePath.load;
-	// SCNvim users: swap these lines above and below too ...
-	"../synths/tidalInstruments*".loadRelative;
-
-	~dirt.loadSynthDefs("../synths/tidalInstruments.scd");
-
-	0.2.wait;
 
 	// "FX/myTidalFx.scd".asRelativePath.load;
 	// ... and these

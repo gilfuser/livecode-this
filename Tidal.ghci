@@ -145,7 +145,7 @@ let p = streamReplace tidal
     hdif = pF "hdif"
     hfb = pF "hfb"
     cof x = ccv x # ccn 2
-    -- phosycon ---------------
+    -- phosycon MIDI style ctrl --
     cutoff x = ccv x # ccn 2
     reson x = ccv x # ccn 3
     sweept x = ccv x # ccn 4
@@ -154,6 +154,19 @@ let p = streamReplace tidal
     envdec x = ccv x # ccn 7
     accdec x = ccv x # ccn 8
     envacc x = ccv x # ccn 9
+    -- TAL-NoiseMaker ---------
+    tvolume = pF "tvolume"
+    tcutoff = pF "tcutoff"
+    lfo1rate = pF "lfo1rate"
+    -- phosycon ---------------
+    acutoff = pF "acutoff"
+    areson = pF "areson"
+    asweept = pF "asweept"
+    aenvmod = pF "aenvmod"
+    aenvatt = pF "aenvatt"
+    aenvdec = pF "aenvdec"
+    aaccdec = pF "aaccdec"
+    aenvacc = pF "aenvacc"
     :}
 
 :set prompt "tidal> "

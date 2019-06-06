@@ -1,7 +1,6 @@
-
 (
 SynthDef(\dummy, { |out, sustain = 1, speed = 1, begin = 0, end = 1, pan, accelerate, offset|
-	var env, sound, rate, phase;
+	var sound, rate, phase;
 	phase = Line.ar(begin, end, sustain);
 	rate = (begin + 1) * (speed + Sweep.kr(1, accelerate));
 	sound = DC.ar(0);
@@ -13,7 +12,7 @@ SynthDef(\dummy, { |out, sustain = 1, speed = 1, begin = 0, end = 1, pan, accele
 
 (
 SynthDef(\click, { |out, sustain = 1, speed = 1, begin = 0, end = 1, pan, accelerate, offset|
-	var env, sound, rate, phase;
+	var sound, rate, phase;
 	phase = Line.ar(begin, end, sustain);
 	rate = (begin + 1) * (speed + Sweep.kr(1, accelerate));
 	sound = Impulse.ar(0);

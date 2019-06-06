@@ -1,7 +1,6 @@
 (
 s.waitForBoot({
 	q = q ? ();
-	if ()
 	// this will load "synths/tidalInstruments.scd" and FX/myTidalFx.scd:
 	"interface/superDirt_startup.scd".loadRelative;
 	// if you are using SCNvim change loadRelative to load, like this:
