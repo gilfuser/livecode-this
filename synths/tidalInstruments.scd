@@ -37,7 +37,8 @@ SynthDef(\stiff, { |out, sustain = 1, freq, amp=0.5, c3=20, pan, fB = 80, rel= 0
 }).add
 );
 
-/*(
+/*
+(
 SynthDef(\piano, { |out, sustain = 1, freq=440, /*gate, */ amp=0.5, rho=1, pan, offset|
 var env = EnvGen.ar( Env.asr(0,1,0.1), /*gate, */ timeScale:sustain, doneAction:2 );
 var sound = OteyPianoStrings.ar( freq, amp, rho:rho ) * env;
@@ -45,7 +46,6 @@ OffsetOut.ar(out,
 DirtPan.ar(sound * 1, ~dirt.numChannels, LinLin.kr(freq,36.midicps,90.midicps,-0.75,0.75), env )
 )
 }).add;
-
 {
 SynthDef(\piano_soundboard,{
 var audio = In.ar([20, 21], 2);
@@ -56,7 +56,8 @@ s.sync;
 //start soundboard effect
 Synth.tail(1,\piano_soundboard)
 }.fork;
-);*/
+);
+*/
 
 
 (

@@ -1,57 +1,57 @@
 q = q ? ();
 {
-	~dirt.stop;
-    /*
-    ~dirt.freeAllSoundFiles;
-	*/
+    if (~dirt !== nil, { ~dirt.freeAllSoundFiles; ~dirt.stop; ~dirt.free });
     0.1.wait;
-	~dirt.free;
-	0.1.wait;
 	~dirt = SuperDirt(2, s);
 	s.sync;
+    0.1.wait;
 	~dirt.start(57120, 0!4);
+	// ~dirt.start(57120, ([8, 10, 12, 14]));
 	s.sync;
 	0.1.wait;
-	~dirt.loadSoundFiles; //("~/CAMPO/samples/*"); // your own samples directory
+	~dirt.loadSoundFiles("~/tidal-samples/*/*");
+    s.sync;
+    0.1.wait;
+    ~dirt.loadSoundFiles("~/CAMPO/samples/*"); // your own samples directory
+    s.sync;
 	0.1.wait;
-
-	// "./synths/tidalInstruments.scd".asRelativePath.load;
+    ~dirt.loadSoundFiles("~/Trabalho/Flou/Airstrip/samples/*");
+    s.sync;
+	0.1.wait;
+    "./synths/tidalInstruments.scd".asRelativePath.load;
 	// if you are using SCNvim uncomment above and comment the line below: (more of those changes down)
-    "../synths/tidalInstruments*".loadRelative;
-
+    // "../synths/tidalInstruments*".loadRelative;
+    0.1.wait;
 	~dirt.loadSynthDefs("../synths/tidalInstruments.scd");
-
-	q.orb0 = ~dirt.orbits[0];
-	q.orb1 = ~dirt.orbits[1];
-	q.orb2 = ~dirt.orbits[2];
-	q.orb3 = ~dirt.orbits[3];
-
+    s.sync;
+	0.1.wait;
+    // ~dirt.loadSynthDefs("../synths/vstInstr.scd");
 	0.1.wait;
 
-	Ndef(\orb0).ar(~dirt.numChannels);
-	Ndef(\orb1).ar(~dirt.numChannels);
-	Ndef(\orb2).ar(~dirt.numChannels);
-	Ndef(\orb3).ar(~dirt.numChannels);
-
+~dirt.orbits.do { |each i|
+    Ndef( "orb%".format(i).asSymbol ).ar(~dirt.numChannels);
+    each.outBus = Ndef( "orb%".format(i).asSymbol ).bus;
+    Ndef( "orb%".format(i).asSymbol ).play;
+};
 	0.1.wait;
-
-	q.orb0.outBus = Ndef(\orb0).bus;
-	q.orb1.outBus = Ndef(\orb1).bus;
-	q.orb2.outBus = Ndef(\orb2).bus;
-	q.orb3.outBus = Ndef(\orb3).bus;
-	0.1.wait;
-
-	Ndef(\orb0).play;
-	Ndef(\orb1).play;
-	Ndef(\orb2).play;
-	Ndef(\orb3).play;
-
-	1.wait;
-
-	// "FX/myTidalFx.scd".asRelativePath.load;
+    ~dirt.loadSynthDefs("./crossorb-routing.scd");
+    "interface/crossorb-routing.scd".asRelativePath.load;
+    "FX/myTidalFx.scd".asRelativePath.load;
+    // (
+    //     Ndef(\allOrbs, { | speak0 = 1 speak1 = 1 speak2 = 1 speak3 = 1 |
+    //     var in0 = InFeedback.ar(8,2) * speak0;
+    //     var in1 = InFeedback.ar(10,2) * speak1;
+    //     var in2 = InFeedback.ar(12,2) * speak2;
+    //     var in3 = InFeedback.ar(14,2) * speak3;
+    //     [OffsetOut.ar(0, in0 + in1 + in2 + in3)]
+    // }).play;
+    // );
+    // Ndef(\allOrbs).addSpec(\speak0, [0, 1, \lin, 1, 1]);
+    // Ndef(\allOrbs).addSpec(\speak1, [0, 1, \lin, 1, 1]);
+    // Ndef(\allOrbs).addSpec(\speak2, [0, 1, \lin, 1, 1]);
+    // Ndef(\allOrbs).addSpec(\speak3, [0, 1, \lin, 1, 1]);
+    // {Ndef(\allOrbs).gui;}.defer;
 	// ... and these
-	"../FX/myTidalFx.scd".loadRelative;
-
-	"super-dirt prepared".postln;
+	// "../FX/myTidalFx.scd".loadRelative;
+	" \n super-dirt prepared \n ".postln;
 }.fork;
-

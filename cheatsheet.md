@@ -54,11 +54,11 @@ Ctrl y
 
 #### to select in between "" [] {} () <>
 
-\<leader>  
-"" \<A-2>  
-[] \<A-8>  
-{} \<A-7>  
-() \<A-9>  
+\<leader>
+"" \<A-2>
+[] \<A-8>
+{} \<A-7>
+() \<A-9>
 <> \<A-y>
 
 #### select whole line from last to first non-empty char
@@ -67,14 +67,14 @@ Ctrl y
 
 #### Create line without leaving mode
 
-down:  
-\<localleader>o  
-up:  
+down:
+\<localleader>o
+up:
 \<localleader>O
 
 #### go back to last edit
 
-\<A-#>  
+\<A-#>
 \<A-'>
 
 #### turn search highlight off
