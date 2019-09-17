@@ -38,23 +38,34 @@ let p = streamReplace tidal
     anticipate i = transition tidal True (Sound.Tidal.Transition.anticipate) i
     anticipateIn i t = transition tidal True (Sound.Tidal.Transition.anticipateIn t) i
     forId i t = transition tidal False (Sound.Tidal.Transition.mortalOverlay t) i
-    d1 = p 1
-    d2 = p 2
-    d3 = p 3
-    d4 = p 4
-    d5 = p 5
-    d6 = p 6
-    d7 = p 7
-    d8 = p 8
-    d9 = p 9
-    d10 = p 10
-    d11 = p 11
-    d12 = p 12
+    d1 = p 1 . (|< orbit 0) 
+    d2 = p 2 . (|< orbit 1) 
+    d3 = p 3 . (|< orbit 2) 
+    d4 = p 4 . (|< orbit 3) 
+    d5 = p 5 . (|< orbit 4) 
+    d6 = p 6 . (|< orbit 5) 
+    d7 = p 7 . (|< orbit 6) 
+    d8 = p 8 . (|< orbit 7) 
+    d9 = p 9 . (|< orbit 8)
+    d10 = p 10 . (|< orbit 9)
+    d11 = p 11 . (|< orbit 10)
+    d12 = p 12 . (|< orbit 11)
     d13 = p 13
     d14 = p 14
     d15 = p 15
     d16 = p 16
-    degree = pF "degree"
+:}
+
+:{
+let setI = streamSetI tidal
+    setF = streamSetF tidal
+    setS = streamSetS tidal
+    setR = streamSetI tidal
+    setB = streamSetB tidal
+:}
+
+:{
+let degree = pF "degree"
     ctranspose = pF "ctranspose"
     mtranspose = pF "mtranspose"
     gtranspose = pF "gtranspose"
@@ -71,17 +82,19 @@ let p = streamReplace tidal
     wet30 = pF "wet30"
     wet40 = pF "wet40"
     wet50 = pF "wet50"
-    wet60 = pF "wet60"
-    wet70 = pF "wet70"
-    wet80 = pF "wet80"
+    -- wet60 = pF "wet60"
+    -- wet70 = pF "wet70"
+    -- wet80 = pF "wet80"
     -- aliases
-    pitch = wet10 -- only in orb 3
-    -- will align only with orbs 0 to 2:
-    tape = wet10
-    wah = wet20
-    llfo = wet30
+    pitch = wet20 -- in orb 1 and 3
+    -- tape = wet20 -- in orb 0 and 2
+    tape = pF "tape"
+    wah = wet30 -- o 2 and 3
+    llfo = wet30 -- o 1 and 3
     comp = wet40
     ampFin = wet50
+    -- orbx
+    redir = pI "redir"
     -- pitchShift
     pideg = pF "pideg"
     pdisp = pF "pdisp"
@@ -145,28 +158,65 @@ let p = streamReplace tidal
     hdif = pF "hdif"
     hfb = pF "hfb"
     cof x = ccv x # ccn 2
-    -- phosycon MIDI style ctrl --
-    cutoff x = ccv x # ccn 2
-    reson x = ccv x # ccn 3
-    sweept x = ccv x # ccn 4
-    envmod x = ccv x # ccn 5
-    envatt x = ccv x # ccn 6
-    envdec x = ccv x # ccn 7
-    accdec x = ccv x # ccn 8
-    envacc x = ccv x # ccn 9
-    -- TAL-NoiseMaker ---------
-    tvolume = pF "tvolume"
-    tcutoff = pF "tcutoff"
-    lfo1rate = pF "lfo1rate"
     -- phosycon ---------------
+    -- cutoff x = ccv x # ccn 2
+    -- reson x = ccv x # ccn 3
+    -- sweept x = ccv x # ccn 4
+    -- envmod x = ccv x # ccn 5
+    -- envatt x = ccv x # ccn 6
+    -- envdec x = ccv x # ccn 7
+    -- accdec x = ccv x # ccn 8
+    -- envacc x = ccv x # ccn 9
     acutoff = pF "acutoff"
-    areson = pF "areson"
+    areson = pF "reson"
     asweept = pF "asweept"
     aenvmod = pF "aenvmod"
     aenvatt = pF "aenvatt"
     aenvdec = pF "aenvdec"
     aaccdec = pF "aaccdec"
     aenvacc = pF "aenvacc"
-    :}
+    -- talnoise ---------------
+    tvol = pF "tvol"
+    tftype = pF "tftype"
+    tcut = pF "tcut"
+    tres = pF "tres"
+    tkfol = pF "tkfol"
+    tfcon = pF "tfcon"
+    tfatt = pF "tfatt"
+    tfdec = pF "tfdec"
+    tfsus = pF "tfsus"
+    tfrel = pF "tfrel"
+    tampa = pF "tampa"
+    tampd = pF "tampd"
+    tamps = pF "tamps"
+    tampr = pF "tampr"
+    tosc1v = pF "tosc1v"
+    tosc2v = pF "tosc2v"
+    tosc3v = pF "tosc3v"
+    tosc1wf = pF "tosc1wf"
+    tosc2wf = pF "tosc2wf"
+    tlfo1r = pF "tlfo1r"
+    tlfo2r = pF "tlfo2r"
+    tlfo1a = pF "tlfo1a"
+    tlfo2a = pF "tlfo2a"
+    -- modo bass --------------
+    bpluk x = ccv (x * 127) # ccn 3
+    bbend x = ccv (x * 127) # ccn 5
+    bslide x = ccv (x * 127) # ccn 0
+    bhamp x = ccv (x * 127) # ccn 12
+    bmute x = ccv (x * 127) # ccn 9
+    blsli x = ccv (x * 127) # ccn 65
+    bghos x = ccv (x * 127) # ccn 10
+    finger = ccn 13
+    palheta = ccn 14
+    slap = ccn 15
+    bharm x = ccv (x * 127) # ccn 17
+    bring x = ccv (x * 127) # ccn 64
+    bleft x = ccv (x * 127) # ccn 4
+    bvol x = ccv (x * 127) # ccn 7
+    bforce x = ccn (x * 5 + 20)
+    ---------------------------
+:}
 
 :set prompt "tidal> "
+
