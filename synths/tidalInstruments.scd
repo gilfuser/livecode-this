@@ -140,11 +140,11 @@ SynthDef(\saw, { | freq, amp = 0.1, att = 0.001, rel = 0.2, lofreq = 1000, hifre
 );
 
 (
-SynthDef(\bazz, { | freq, amp=0.01, attack = 0.025, decay = 0.6, release = 0.5, crunchy = 200, /*gate, */ out, pan, offset, sustain = 1 |
+SynthDef(\bazz, { | freq, amp=0.01, attack = 0.025, decay = 0.6, release = 0.5, crunchy = 200, gate,  out, pan, offset, sustain = 1 |
 	var snd, env, snd2, sum;
 	env = Env.adsr(
 		attackTime: attack, decayTime: decay, sustainLevel: 0.5, releaseTime: release
-	).kr(doneAction:2, timeScale:sustain/*, gate:gate*/);
+	).kr( Done.freeSelf, gate, sustain );
 	env = env/3;
 	snd = LFSaw.ar(freq: SinOsc.kr(XLine.kr(7, 2, 1)).range(freq, freq/2), mul: env/2)
 	+ LFSaw.ar(freq: freq, mul: env)
@@ -162,6 +162,8 @@ SynthDef(\bazz, { | freq, amp=0.01, attack = 0.025, decay = 0.6, release = 0.5, 
 }).add;
 );
 
+
+
 (
 SynthDef(\rhodes, { | out freq pan vel = 0.8 modind = 0.2 mix = 0.2 lfospeed = 0.4 lfodepth = 0.1 sustain = 1 gate = 1 |
     var env1, env2, env3, env4;
@@ -176,13 +178,42 @@ SynthDef(\rhodes, { | out freq pan vel = 0.8 modind = 0.2 mix = 0.2 lfospeed = 0
     osc3 = SinOsc.ar(freq, osc4) * env3 * vel;
     osc2 = SinOsc.ar(freq * 15) * 2pi * 0.108819 * env2 * vel;
     osc1 = SinOsc.ar(freq, osc2) * env1 * vel;
-    snd = Mix((osc3 * (1 - mix)) + (osc1 * mix));
-    snd = snd * (SinOsc.ar(lfospeed) * lfodepth + 1);
+    snd = Mix( (osc3 * (1 - mix)) + (osc1 * mix) );
+    snd = snd * ( SinOsc.ar(lfospeed) * lfodepth + 1 );
     // using the doneAction: 2 on the other envs can create clicks (bc of the linear curve maybe?)
-    snd = snd * EnvGen.ar(Env.asr(0, 1, 0.1), gate, doneAction: 2);
-    snd = Pan2.ar(snd, pan);
+    snd = snd * Env.asr(0, 1, 0.1).ar( Done.freeSelf, gate );
+    //snd = Pan2.ar(snd, pan);
     OffsetOut.ar(out,
 		DirtPan.ar(snd, ~dirt.numChannels, pan)
 	)
+}).add;
+);
+
+/*(
+SynthDef(\acid, { | out freq gate = 1 pan acof = 2000 arez = 0.5 adist = 0.5 lagt = 0.5 wform = 0 attack = 0.04 decay = 0.2 amp = 1 sustain = 1 |
+	var waves = [ DPW4Saw.ar( freq.lag2(lagt), 0.75 ),  Pulse.ar( freq.lag2(lagt) ) ];
+	var snd = SelectX.ar( wform, waves )!( s.options.numOutputBusChannels );
+	var env = Env.adsr(attack, decay, amp * 0.5, 0.1).kr(doneAction: Done.freeSelf, gate);
+	var noise = { LFDNoise3.ar(0.3,0.0156,1) };
+	// snd = snd.ring4(1);
+	// snd = (snd*1.25).softclip; //.fold(-0.75, 0.75); // clip2(0.5);
+	snd = snd * noise * env;
+	snd = ( RLPFD.ar( snd, acof, arez, adist ) * 0.5 ) + ( RLPF.ar(snd, acof) * 0.5 );
+	// snd = snd + ( HPF.ar(snd, 400, 10).softclip * 0.04);
+	snd = snd + PitchShift.ar(snd, 0.1, 1.0, 0.02, 0.2) * 0.5;
+    OffsetOut.ar( out, DirtPan.ar( snd, ~dirt.numChannels, pan ) )
+}).add;
+);*/
+(
+SynthDef(\acid, { | out freq pan /*gate = 1*/ sustain = 1 acof = 2000 reso = 0.5 dist = 0.5 wform = 0 amp = 0.4 att = 0.04 rel = 0.5 |
+	var slide = LFDNoise3.kr(0.25).range(0.1, 0.4);
+	var waves = [ DPW4Saw.ar( freq.lag2(slide) * 0.5, 0.75 ),  Pulse.ar( freq.lag2(slide) ) ];
+	var lfnoise = { LFDNoise3.ar(0.3,0.0156,1) };
+	var snd = SelectX.ar( wform, waves );
+	var env = Env.adsr( att, 0.2, amp * 0.5, rel ).kr( Done.freeSelf /*, gate*/ );
+	snd = snd * lfnoise * env;
+	snd = ( RLPFD.ar( snd, acof, reso, dist ) * 0.5 ) + ( RLPF.ar( snd, acof ) * 0.5 );
+	snd = snd + PitchShift.ar(snd, 0.1, 1.0, 0.02, 0.2);
+	OffsetOut.ar(out, DirtPan.ar( snd, ~dirt.numChannels, pan ) );
 }).add;
 );

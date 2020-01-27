@@ -13,7 +13,7 @@ t = EspClock.new;
 t.start;
 0.1.wait;
 }.fork;
-TempoClock.default.tempo;
+TempoClock.default.tempo = t.tempo;
 only then, evaluate what follows
 You can change the tempo in the GUI and press enter. No need to reload.
 New recordings with the same name will substitute the older.
@@ -34,7 +34,7 @@ var player = nil!numbufs;
 var player_button = (nil!(numbufs/4))!4;
 var recorder_button = (nil!(numbufs/4))!4;
 var reload_func = {
-	var tempo = l.tempo;
+	var tempo = t.tempo;
 	numbufs.do{ |i|
 		var slot = floor(i/(numbufs/4));
 		buffer[i].free;
@@ -43,7 +43,7 @@ var reload_func = {
 };
 var recordCounter = 0;
 
-TempoClock.default = l; // link.scd
+TempoClock.default.tempo = l; // link.scd
 // Window
 win.view.background_(Color.white);
 
@@ -130,7 +130,7 @@ layout.nextLine;
 
 			AppClock.sched(
 				(TempoClock.default.tempo * durations[i])
-				+ ((TempoClock.default.nextBar - TempoClock.default.beats) * TempoClock.default.beatDur),
+				+ ( (TempoClock.default.nextBar - TempoClock.default.beats) * TempoClock.default.beatDur ),
 				{ v.value_(0);
 					{
 						buffer[current_buffer].write(
@@ -150,7 +150,7 @@ layout.nextLine;
 		};
 
 		// PLAY
-		player_button[i][j] = Button(container[i].view, (bsize@bsize))
+		player_button[i][j] = Button( container[i].view, (bsize@bsize) )
 		.font_(font)
 		.states_([
 			["PLAY", Color.green, Color.white],

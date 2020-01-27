@@ -5,7 +5,7 @@
 import Sound.Tidal.Context
 
 -- total latency = oLatency + cFrameTimespan
-tidal <- startTidal (superdirtTarget {oLatency = 0.2, oAddress = "127.0.0.1", oPort = 57120}) (defaultConfig {cFrameTimespan = 1/20})
+tidal <- startTidal (superdirtTarget {oLatency = 0.25, oAddress = "127.0.0.1", oPort = 57120}) (defaultConfig {cFrameTimespan = 1/20})
 
 :{
 let p = streamReplace tidal
@@ -86,13 +86,13 @@ let degree = pF "degree"
     -- wet70 = pF "wet70"
     -- wet80 = pF "wet80"
     -- aliases
-    pitch = wet20 -- in orb 1 and 3
-    tape = wet20 -- in orb 0 and 2
-    wah = wet30 -- o 2 and 3
-    llfo = wet30 -- o 1 and 3
-    comp = wet40
-    ampFin = wet50
-    -- orbx
+    pitch = pF "pitch"
+    tape = pF "tape" -- in orb 0 and 2
+    wah = pF "wah" -- o 2 and 3
+    llfo = pF "llfo" -- o 1 and 3
+    comp = pF "comp"
+    ampFin = pF "ampFin"
+    orbx = pF "orbx"
     redir = pI "redir"
     -- pitchShift
     pideg = pF "pideg"
@@ -199,26 +199,28 @@ let degree = pF "degree"
     tlfo1a = pF "tlfo1a"
     tlfo2a = pF "tlfo2a"
     -- modo bass --------------
-    bpluk x = ccv (x * 127) # ccn 3
-    bbend x = ccv (x * 127) # ccn 5
-    bslide x = ccv (x * 127) # ccn 0
-    bhamp x = ccv (x * 127) # ccn 12
-    bmute x = ccv (x * 127) # ccn 9
-    blsli x = ccv (x * 127) # ccn 65
-    bghos x = ccv (x * 127) # ccn 10
+    movol x = ccv (x * 127) # ccn 7
+    momute x = ccv (x * 127) # ccn 9
+    mopluck x = ccv (x * 127) # ccn 3
+    modring x = ccv (x * 127) # ccn 64
+    mopluk x = ccv (x * 127) # ccn 3
+    mobend x = ccv (x * 127) # ccn 5
+    mohamp x = ccv (x * 127) # ccn 12
+    moslide x = ccv (x * 127) # ccn 65
+    moghos x = ccv (x * 127) # ccn 10
     finger = ccn 13
     palheta = ccn 14
     slap = ccn 15
-    bharm x = ccv (x * 127) # ccn 17
-    bring x = ccv (x * 127) # ccn 64
-    bleft x = ccv (x * 127) # ccn 4
-    bvol x = ccv (x * 127) # ccn 7
-    bforce x = ccn (x * 5 + 20)
+    moharm x = ccv (x * 127) # ccn 17
+    moleft x = ccv (x * 127) # ccn 4
+    moforce x = ccn (x * 5 + 20)
     ---------------------------
     orb0 = pF "orb0"
     orb1 = pF "orb1"
     orb2 = pF "orb2"
     orb3 = pF "orb3"
+    ---------------------------
+    c3 = pF "c3" -- stiff
 :}
 
 :set prompt "tidal> "

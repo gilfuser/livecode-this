@@ -1,47 +1,18 @@
-setcps(113/60/4)
+espgrid tidal
 
+cpsEsp (110/60/4)
+
+setcps (110/60/4)
+
+-- espgrid tidal
 -- Open Carabiner First. To Tidal Link
+
 -- sock <- carabiner tidal 4 (-0.20)
+
+p 1 $ " supervibe*8" |+| pan "[0 0.25 0.5 0.75]*3" # n "[0 3 5 8]*4"
 
 creise =
     fix (spreadr ($) [density 2, rev, slow 2, striate 3, (# speed ( choose [0.75,0.5,1,1.5]) )]) (n "2 4 8 16")
-o3r = once $
-    "dummy"
-    # tape 0 # trate 0.25 # tphase 0 # tdepth 0.5 # toffset 0.5
-    # wah 0 # wrate 1 # depth 0.75 # sinsaw 0 # jfreq 1 # jdepth 0.1
-    # llfo 0 # sisap 0 # lrate 0 # iphase 0.5 # midfreq 60 # hifreq 20000
-    # comp 0 # cctrl 1 # thresh 0.5 # clamp 0.01 # relax 0.1 
-    # ampFin 1 # postAmp 1 
-    # orbit 3
-o0r = once $
-    "dummy"
-    # tape 0 # trate 0.25 # tphase 0 # tdepth 0.5 # toffset 0.5
-    # wah 0 # wrate 1 # depth 0.75 # sinsaw 0 # jfreq 1 # jdepth 0.1
-    # llfo 0 # sisap 0 # lrate 0 # iphase 0.5 # midfreq 60 # hifreq 20000
-    # comp 0 # cctrl 1 # thresh 0.5 # clamp 0.01 # relax 0.1 
-    # ampFin 1 # postAmp 1 
-    # orbit 0
-orbr x =
-    once $
-    fix (
-        (# wet50 0).(# wet60 1)
-    ) (orbit 3) $
-    "dummy"
-    # pitch 0 # pideg 0 # tdisp 0.1 # pdisp 0.05
-    # tape 0 # trate 0.25 # tphase 0 # tdepth 0.5 # toffset 0.5
-    # wah 0 # wrate 1 # depth 0.75 # sinsaw 0 # jfreq 1 # jdepth 0.1
-    # llfo 0 # sisap 0 # lrate 0 # iphase 0.5 # midfreq 60 # hifreq 20000
-    # comp 0 # cctrl 1 # thresh 0.5 # clamp 0.01 # relax 0.1 
-    # ampFin 1 # postAmp 1 
-    +| orbit x
--- reset all orbs
-orbar =
-    orbr "[0 1 2 3]"
--- lfoClose = once $
-    -- "dummy"
-    -- # llfo 1 # sisap 0 # lrate 0 # iphase 1 # midfreq 60 # hifreq 200
--- lfoOpen = once $
-    -- sound "lfoOpen"
 verbr x =
     once $
     "dummy"
@@ -68,7 +39,7 @@ acidcof =
     acutoff (
         ( slow 64 $ range 0.06 0.93 sine )
         + ( slow 8 $ range "-0.06" 0.06 tri )
-        ) # "dummy"
+        ) # "acid"
 acidres =
     p "acidres" $
     (64 ~>) $ 
@@ -79,7 +50,7 @@ acidenm =
     aenvmod (
         ( slow 0.5 ( range 0.5 0.75 tri) )
         + ( slow 132 $ range "-0.5" 0.25 sine )
-    ) # "dummy"
+    ) # "acid"
 acidatt =
     p "acidatt" $
     (12.6 ~>) $ 
@@ -100,7 +71,7 @@ acidacd =
     aaccdec (
         ( slow 112 $ range 0.086 0.97 tri )
         + ( slow 4 $ range "-0.03" 0.03 tri )
-        ) # "dummy"
+        ) # "acid"
 acideac =
     p "acideac" $
     (19.84 ~>) $ 
@@ -108,7 +79,7 @@ acideac =
         ( slow 84 $ range 0 0.73 sine )
         * ( slow 12 $ tri )
         + 0.23
-        ) # "dummy"
+        ) # "acid"
 acidmod =
     do
     acidcof
@@ -118,7 +89,7 @@ acidmod =
     acidacd
     acideac
     aciddec
-acidmstop =
+stopacidmod =
     do
     p "acidcof" silence
     p "acidres" silence
@@ -161,6 +132,32 @@ submarino =
                 # orbit 3
             )
         ]
+bassist =
+    p "modo" $
+        someCyclesBy 0.25 ((# ccv 127 ).( # ccn "[13!3 15]" )) $
+        stack [
+            "modo" # ccv (slow 16 $ range 0 127 sine) # ccn 0 -- slide
+            ,
+            "modo*1" # ccv (
+                wchoose [(0,0.75),(127,0.25)]
+                -- 96
+                )
+                # ccn 12 -- ham. on/pull off
+            ,
+            "modo*32" # ccv (slow 8 $ range 0 127 $ perlin2With (cosine) (sine) ) # ccn 9 -- mute
+            ,
+            "modo" # ccv (irand 127) # ccn 1 -- vibrato
+            -- ,
+            -- "modo/2" # ccv ( choose [1, 127] ) # ccn 64 -- let ring
+            ,
+            "modo" # ccv 127 # ccn 13 -- finger mode
+            ,
+            "modo*32" # ccv ( slow 4 (perlin2 (sine*64) + 32) ) # ccn 4 -- left hand position
+            ,
+            "modo*32" # ccv ( slow 4 $ (range 0 127 $ slow 4 $ perlin2With (cosine*2) (sine*2)) ) # ccn 3 -- pluck pos
+        ]
+        # orbit 1
+stopbassist = p "modo" silence
 -- talnoise parameters
 -- reson x = ccv x # ccn 3
 -- sweept x = ccv x # ccn 4

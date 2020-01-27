@@ -56,3 +56,4 @@ q = q ? ();
 		win.onClose = { task.stop; controller.remove };
 	}.defer
 }.fork
+
